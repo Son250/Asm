@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
@@ -54,3 +55,10 @@ Route::get('cart', [ClientController::class, 'cart']);
 Route::get('checkout', [ClientController::class, 'checkout'])->name('checkout');
 Route::post('checkoutStore', [ClientController::class, 'checkoutStore'])->name('checkoutStore');
 Route::get('deleteCart/{id}', [ClientController::class, 'deleteCart'])->name('deleteCart');
+
+//account
+Route::get('login', [AccountController::class, 'login']);
+Route::get('logout', [AccountController::class, 'logout'])->name('logout');
+Route::post('loginStore', [AccountController::class, 'loginStore'])->name('loginStore');
+Route::post('register', [AccountController::class, 'register'])->name('register');
+Route::get('dashbroad', [AccountController::class, 'dashbroad'])->name('dashbroad');

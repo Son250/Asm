@@ -45,7 +45,9 @@
     <link rel="stylesheet" href="{{ asset('assets/views/css/demo4.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/views/vendor/fontawesome-free/css/all.min.css') }}">
     {{-- css cho giỏ hàng --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/views/css/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/views/css/home.css') }}">
+
 </head>
 
 <body>
@@ -80,7 +82,22 @@
                                     <li><a href="blog.html">Blog</a></li>
                                     <li><a href="wishlist.html">Đơn hàng</a></li>
                                     <li><a href="{{ url('cart') }}">Giỏ hàng</a></li>
-                                    <li><a href="login.html" class="login-link">Đăng nhập</a></li>
+                                    @php
+                                        $user = Session::get('user');
+                                    @endphp
+                                    @if (!Session::has('user'))
+                                        <li><a href="{{ url('login') }}">Đăng nhập</a></li>
+                                    @else
+                                        <li class="hello"><a href="">Xin chào {{ $user->name }}</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="{{ route('dashbroad') }}">Thông tin cá nhân</a></li>
+                                                <li><a href="">Truy cập trang admin</a></li>
+                                                <li><a href="">Đơn đặt</a></li>
+                                                <li><a href="{{ route('logout') }}">Đăng xuất</a></li>
+                                            </ul>
+                                        </li>
+                                    @endif
+
                                 </ul>
                             </div>
                             <!-- End .header-menu -->
@@ -176,80 +193,86 @@
                             </h6>
                         </div>
 
-                        <a href="login.html" class="header-icon" title="login"><i class="icon-user-2"></i></a>
+                        @if (!Session::has('user'))
+                            <a href="{{ url('login') }}" class="header-icon" title="login"><i
+                                    class="icon-user-2"></i></a>
+                        @else
+                            <a href="{{ url('dashbroad') }}" class="header-icon" title="login"><i
+                                    class="icon-user-2"></i></a>
+                        @endif
+                            <a href="wishlist.html" class="header-icon" title="wishlist"><i
+                                    class="icon-wishlist-2"></i></a>
 
-                        <a href="wishlist.html" class="header-icon" title="wishlist"><i
-                                class="icon-wishlist-2"></i></a>
+                            {{-- Cart --}}
+                            <div class="dropdown cart-dropdown">
+                                <a href="{{ url('cart') }}" title="Cart"
+                                    class="dropdown-toggle dropdown-arrow cart-toggle" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    data-display="static">
+                                    <i class="minicart-icon"></i>
+                                    <span class="cart-count badge-circle">3</span>
+                                </a>
 
-                        {{-- Cart --}}
-                        <div class="dropdown cart-dropdown">
-                            <a href="{{ url('cart') }}" title="Cart"
-                                class="dropdown-toggle dropdown-arrow cart-toggle" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                data-display="static">
-                                <i class="minicart-icon"></i>
-                                <span class="cart-count badge-circle">3</span>
-                            </a>
+                                <div class="cart-overlay"></div>
 
-                            <div class="cart-overlay"></div>
+                                <div class="dropdown-menu mobile-cart">
+                                    <a href="#" title="Close (Esc)" class="btn-close">×</a>
 
-                            <div class="dropdown-menu mobile-cart">
-                                <a href="#" title="Close (Esc)" class="btn-close">×</a>
+                                    <div class="dropdownmenu-wrapper custom-scrollbar">
+                                        <div class="dropdown-cart-header">Shopping Cart</div>
+                                        <!-- End .dropdown-cart-header -->
 
-                                <div class="dropdownmenu-wrapper custom-scrollbar">
-                                    <div class="dropdown-cart-header">Shopping Cart</div>
-                                    <!-- End .dropdown-cart-header -->
+                                        <div class="dropdown-cart-products">
+                                            <div class="product">
+                                                <div class="product-details">
+                                                    <h4 class="product-title">
+                                                        <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
+                                                    </h4>
 
-                                    <div class="dropdown-cart-products">
-                                        <div class="product">
-                                            <div class="product-details">
-                                                <h4 class="product-title">
-                                                    <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
-                                                </h4>
+                                                    <span class="cart-product-info">
+                                                        <span class="cart-product-qty">1</span> × $99.00
+                                                    </span>
+                                                </div>
+                                                <!-- End .product-details -->
 
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span> × $99.00
-                                                </span>
-                                            </div>
-                                            <!-- End .product-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    {{-- <img src="{{ asset('images/products/product-1.jpg') }}" alt="product"
+                                                <figure class="product-image-container">
+                                                    <a href="product.html" class="product-image">
+                                                        {{-- <img src="{{ asset('images/products/product-1.jpg') }}" alt="product"
                                                         width="80" height="80"> --}}
-                                                    <img src="assets/views/images/products/product-1.jpg"
-                                                        alt="product" width="80" height="80">
-                                                </a>
+                                                        <img src="assets/views/images/products/product-1.jpg"
+                                                            alt="product" width="80" height="80">
+                                                    </a>
 
-                                                <a href="#" class="btn-remove"
-                                                    title="Remove Product"><span>×</span></a>
-                                            </figure>
+                                                    <a href="#" class="btn-remove"
+                                                        title="Remove Product"><span>×</span></a>
+                                                </figure>
+                                            </div>
+                                            <!-- End .product -->
+
+
                                         </div>
-                                        <!-- End .product -->
+                                        <!-- End .cart-product -->
 
+                                        <div class="dropdown-cart-total">
+                                            <span>TỔNG TIỀN:</span>
 
+                                            <span class="cart-total-price float-right">$134.00</span>
+                                        </div>
+                                        <!-- End .dropdown-cart-total -->
+
+                                        <div class="dropdown-cart-action">
+                                            <a href="{{ url('cart') }}"
+                                                class="btn btn-gray btn-block view-cart">Giỏ
+                                                hàng</a>
+                                            <a href="checkout.html" class="btn btn-dark btn-block">Thanh toán</a>
+                                        </div>
+                                        <!-- End .dropdown-cart-total -->
                                     </div>
-                                    <!-- End .cart-product -->
-
-                                    <div class="dropdown-cart-total">
-                                        <span>TỔNG TIỀN:</span>
-
-                                        <span class="cart-total-price float-right">$134.00</span>
-                                    </div>
-                                    <!-- End .dropdown-cart-total -->
-
-                                    <div class="dropdown-cart-action">
-                                        <a href="{{ url('cart') }}" class="btn btn-gray btn-block view-cart">Giỏ
-                                            hàng</a>
-                                        <a href="checkout.html" class="btn btn-dark btn-block">Thanh toán</a>
-                                    </div>
-                                    <!-- End .dropdown-cart-total -->
+                                    <!-- End .dropdownmenu-wrapper -->
                                 </div>
-                                <!-- End .dropdownmenu-wrapper -->
+                                <!-- End .dropdown-menu -->
                             </div>
-                            <!-- End .dropdown-menu -->
-                        </div>
-                        <!-- End .dropdown -->
+                            <!-- End .dropdown -->
                     </div>
                     <!-- End .header-right -->
                 </div>

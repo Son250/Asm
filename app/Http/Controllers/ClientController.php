@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+
 
 class ClientController extends Controller
 {
     //
+    // public $user = Session::get('user');
     function home()
     {
         $products = DB::table('products')
@@ -37,8 +40,9 @@ class ClientController extends Controller
     }
     function addToCart(Request $request, $id)
     {
+        $user = Session::get('user');
         DB::table('carts')->insert([
-            'user_id' => '1',
+            'user_id' => $user->id,
             'product_id' => $id,
             'quantity' => $request->input('quantity'),
 
@@ -47,7 +51,8 @@ class ClientController extends Controller
     }
     function cart()
     {
-        $carts = DB::table('carts')->where('user_id', '1')
+        $user = Session::get('user');
+        $carts = DB::table('carts')->where('user_id', $user->id)
             ->select('carts.*', 'products.*', 'carts.quantity as quantityProductCart', 'carts.id as idCart')
             ->join('products', 'carts.product_id', '=', 'products.id')
             ->get();
@@ -59,7 +64,8 @@ class ClientController extends Controller
 
     function checkout(Request $request)
     {
-        $carts = DB::table('carts')->where('user_id', '1')
+        $user = Session::get('user');
+        $carts = DB::table('carts')->where('user_id', $user->id)
             ->select('carts.*', 'products.*', 'carts.quantity as quantityProductCart', 'carts.id as idCart')
             ->join('products', 'carts.product_id', '=', 'products.id')
             ->get();
@@ -71,8 +77,9 @@ class ClientController extends Controller
 
     function deleteCart($id)
     {
+        $user = Session::get('user');
         DB::table('carts')
-            ->where('user_id', '1')
+            ->where('user_id', $user->id)
             ->where('id', $id)
             ->delete();
         return back()->with('status', 'Bạn đã xóa thành công !');
@@ -80,7 +87,8 @@ class ClientController extends Controller
     function checkoutStore(Request $request)
     {
         // dd('Đã đi vào hàm checkout store');
-        $carts = DB::table('carts')->where('user_id', '1')
+        $user = Session::get('user');
+        $carts = DB::table('carts')->where('user_id', $user->id)
             ->select('carts.*', 'products.*', 'carts.quantity as quantityProductCart', 'carts.id as idCart')
             ->join('products', 'carts.product_id', '=', 'products.id')
             ->get();
@@ -102,13 +110,13 @@ class ClientController extends Controller
                 'payment_method' => $payment_method,
                 'shipping_address' => $shipping_address,
                 'status' => 'Chờ xác nhận',
-                'customer_id' => '1',
+                'customer_id' => $user->id,
             ]);
 
             // Lấy đơn hàng mới nhất
             $latestOrder = DB::table('orders')->latest()->first();
 
-           
+
             // Lưu chi tiết đơn hàng
             foreach ($carts as $item) {
                 DB::table('order_items')->insert([
@@ -120,7 +128,7 @@ class ClientController extends Controller
             }
 
             DB::table('carts')
-                ->where('user_id', '1')
+                ->where('user_id', $user->id)
                 ->delete();
             return redirect('cart')->with('status', 'Bạn đã đặt hàng thành công!');
         } else {
