@@ -31,6 +31,7 @@ class AccountController extends Controller
         DB::table('users')->insert([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
+            'role' => 'User',
             'password' => Hash::make($request->password),
         ]);
         return redirect('login')->with('register', 'Đăng ký tài khoản thành công!');

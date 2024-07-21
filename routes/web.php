@@ -22,30 +22,31 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ClientController::class, 'home']);
 
 
-//admin
-Route::get('admin', [AdminController::class, 'home']);
+Route::group(['middleware' => ['admin']], function () {
 
-//AdminProductsController
-Route::get('admin/product/list', [AdminProductController::class, 'list']);
-Route::get('admin/product/add', [AdminProductController::class, 'add']);
-Route::get('admin/product/edit/{id}', [AdminProductController::class, 'edit'])->name('edit');
-Route::get('admin/product/delete/{id}', [AdminProductController::class, 'delete'])->name('deleteProduct');
-Route::post('admin/product/store', [AdminProductController::class, 'store']);
-Route::post('admin/product/storeUpdate/{id}', [AdminProductController::class, 'storeUpdate'])->name('storeUpdateProduct');
+    //admin
+    Route::get('admin', [AdminController::class, 'home']);
 
-//Admin Category
-Route::get('admin/category/list', [AdminCategoryController::class, 'list']);
-Route::get('admin/category/add', [AdminCategoryController::class, 'add']);
-Route::post('admin/category/store', [AdminCategoryController::class, 'store']);
-Route::get('admin/category/edit/{id}', [AdminCategoryController::class, 'edit'])->name('editCategory');
-Route::get('admin/category/delete/{id}', [AdminCategoryController::class, 'delete'])->name('deleteCategory');
-Route::post('admin/category/storeUpdate/{id}', [AdminCategoryController::class, 'storeUpdate'])->name('storeUpdateCategory');
+    //AdminProductsController
+    Route::get('admin/product/list', [AdminProductController::class, 'list']);
+    Route::get('admin/product/add', [AdminProductController::class, 'add']);
+    Route::get('admin/product/edit/{id}', [AdminProductController::class, 'edit'])->name('edit');
+    Route::get('admin/product/delete/{id}', [AdminProductController::class, 'delete'])->name('deleteProduct');
+    Route::post('admin/product/store', [AdminProductController::class, 'store']);
+    Route::post('admin/product/storeUpdate/{id}', [AdminProductController::class, 'storeUpdate'])->name('storeUpdateProduct');
 
-//Admin User
-Route::get('admin/user/list', [AdminUserController::class, 'list']);
-Route::get('admin/user/add', [AdminUserController::class, 'add']);
+    //Admin Category
+    Route::get('admin/category/list', [AdminCategoryController::class, 'list']);
+    Route::get('admin/category/add', [AdminCategoryController::class, 'add']);
+    Route::post('admin/category/store', [AdminCategoryController::class, 'store']);
+    Route::get('admin/category/edit/{id}', [AdminCategoryController::class, 'edit'])->name('editCategory');
+    Route::get('admin/category/delete/{id}', [AdminCategoryController::class, 'delete'])->name('deleteCategory');
+    Route::post('admin/category/storeUpdate/{id}', [AdminCategoryController::class, 'storeUpdate'])->name('storeUpdateCategory');
 
-
+    //Admin User
+    Route::get('admin/user/list', [AdminUserController::class, 'list']);
+    Route::get('admin/user/add', [AdminUserController::class, 'add']);
+});
 //client
 Route::get('home', [ClientController::class, 'home']);
 Route::get('category/{id}', [ClientController::class, 'category'])->name('category');

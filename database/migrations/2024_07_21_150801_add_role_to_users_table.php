@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id();
-           
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            //
+            // $table->enum('role', ['admin', 'user'])->default('user')->after('email');
+            $table->string('role')->default('user')->after('password');
+
         });
     }
 
@@ -23,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };
