@@ -81,7 +81,14 @@
                                     <li><a href="about.html">Về chúng tôi</a></li>
                                     <li><a href="blog.html">Blog</a></li>
                                     <li><a href="wishlist.html">Đơn hàng</a></li>
-                                    <li><a href="{{ url('cart') }}">Giỏ hàng</a></li>
+                                    <li><a
+                                            href="
+                                        @if (Session::has('user')) {{ url('cart') }}
+                                              @else
+                                              # @endif
+                                       
+                                         ">Giỏ
+                                            hàng</a></li>
                                     @php
                                         $user = Session::get('user');
                                     @endphp
@@ -213,63 +220,92 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 data-display="static">
                                 <i class="minicart-icon"></i>
-                                <span class="cart-count badge-circle">3</span>
+                                @php
+                                    if (Session::has('user')) {
+                                        $carts = DB::table('carts')
+                                            ->where('user_id', $user->id)
+                                            ->select(
+                                                'carts.*',
+                                                'products.*',
+                                                'carts.quantity as quantityProductCart',
+                                                'carts.id as idCart',
+                                            )
+                                            ->join('products', 'carts.product_id', '=', 'products.id')
+                                            ->get();
+                                        $totalPrice = $carts->reduce(function ($carry, $item) {
+                                            return $carry + $item->price * $item->quantityProductCart;
+                                        }, 0);
+                                    }
+                                @endphp
+                                <span class="cart-count badge-circle">
+                                    @if (Session::has('user'))
+                                        {{ count($carts) }}
+                                    @else
+                                        0
+                                    @endif
+
+                                </span>
                             </a>
 
                             <div class="cart-overlay"></div>
 
                             <div class="dropdown-menu mobile-cart">
                                 <a href="#" title="Close (Esc)" class="btn-close">×</a>
+                                @if (Session::has('user'))
+                                    <div class="dropdownmenu-wrapper custom-scrollbar">
+                                        <div class="dropdown-cart-header">Shopping Cart</div>
+                                        <!-- End .dropdown-cart-header -->
 
-                                <div class="dropdownmenu-wrapper custom-scrollbar">
-                                    <div class="dropdown-cart-header">Shopping Cart</div>
-                                    <!-- End .dropdown-cart-header -->
+                                        @foreach ($carts as $item)
+                                            <div class="dropdown-cart-products">
+                                                <div class="product">
+                                                    <div class="product-details">
+                                                        <h4 class="product-title">
+                                                            <a href="product.html">{{ $item->name }}</a>
+                                                        </h4>
 
-                                    <div class="dropdown-cart-products">
-                                        <div class="product">
-                                            <div class="product-details">
-                                                <h4 class="product-title">
-                                                    <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
-                                                </h4>
+                                                        <span class="cart-product-info">
+                                                            <span
+                                                                class="cart-product-qty">{{ $item->quantityProductCart }}</span>
+                                                            × {{ number_format($item->price, '0', ',', '.') }}đ
+                                                        </span>
+                                                    </div>
 
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span> × $99.00
-                                                </span>
+
+                                                    <figure class="product-image-container">
+                                                        <a href="product.html" class="product-image">
+
+                                                            <img src="{{ asset('images/' . $item->img) }}"
+                                                                alt="product" width="80" height="80">
+                                                        </a>
+
+                                                        <a href="{{ route('deleteCart', $item->idCart) }}"
+                                                            class="btn-remove"
+                                                            title="Remove Product"><span>×</span></a>
+                                                    </figure>
+                                                </div>
+
                                             </div>
-                                            <!-- End .product-details -->
+                                        @endforeach
 
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    {{-- <img src="{{ asset('images/products/product-1.jpg') }}" alt="product"
-                                                        width="80" height="80"> --}}
-                                                    <img src="assets/views/images/products/product-1.jpg"
-                                                        alt="product" width="80" height="80">
-                                                </a>
+                                        <div class="dropdown-cart-total">
+                                            <span>TỔNG TIỀN:</span>
 
-                                                <a href="#" class="btn-remove"
-                                                    title="Remove Product"><span>×</span></a>
-                                            </figure>
+                                            <span
+                                                class="cart-total-price float-right">{{ number_format($totalPrice, '0', ',', '.') }}đ</span>
                                         </div>
-                                        <!-- End .product -->
 
 
+                                        <div class="dropdown-cart-action">
+                                            <a href="{{ url('cart') }}"
+                                                class="btn btn-gray btn-block view-cart">Giỏ
+                                                hàng</a>
+                                            <a href="{{ route('checkout') }}" class="btn btn-dark btn-block">Thanh
+                                                toán</a>
+                                        </div>
+                                        <!-- End .dropdown-cart-total -->
                                     </div>
-                                    <!-- End .cart-product -->
-
-                                    <div class="dropdown-cart-total">
-                                        <span>TỔNG TIỀN:</span>
-
-                                        <span class="cart-total-price float-right">$134.00</span>
-                                    </div>
-                                    <!-- End .dropdown-cart-total -->
-
-                                    <div class="dropdown-cart-action">
-                                        <a href="{{ url('cart') }}" class="btn btn-gray btn-block view-cart">Giỏ
-                                            hàng</a>
-                                        <a href="checkout.html" class="btn btn-dark btn-block">Thanh toán</a>
-                                    </div>
-                                    <!-- End .dropdown-cart-total -->
-                                </div>
+                                @endif
                                 <!-- End .dropdownmenu-wrapper -->
                             </div>
                             <!-- End .dropdown-menu -->
@@ -292,6 +328,7 @@
                             </li>
                             @php
                                 $categories = DB::table('categories')->get();
+                                $carts = DB::table('carts')->get();
                             @endphp
                             @foreach ($categories as $i => $item)
                                 <li>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ClientController;
@@ -46,6 +47,12 @@ Route::group(['middleware' => ['admin']], function () {
     //Admin User
     Route::get('admin/user/list', [AdminUserController::class, 'list']);
     Route::get('admin/user/add', [AdminUserController::class, 'add']);
+
+    //Admin Order
+    Route::get('admin/order/list', [AdminOrderController::class, 'list']);
+    Route::get('admin/order/edit/{id}', [AdminOrderController::class, 'edit'])->name('editOrder');
+    Route::post('admin/order/storeUpdateOrder/{id}', [AdminOrderController::class, 'storeUpdate'])->name('storeUpdateOrder');
+
 });
 //client
 Route::get('home', [ClientController::class, 'home']);

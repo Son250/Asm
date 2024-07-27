@@ -126,7 +126,7 @@
                                 <div class="form-group">
                                     <label class="order-comments">Ghi chú</label>
                                     <textarea class="form-control" name="note" placeholder="Notes about your order, e.g. special notes for delivery."
-                                        required></textarea>
+                                        ></textarea>
                                 </div>
 
                             </li>

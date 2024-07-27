@@ -21,101 +21,111 @@
                     {{ session('status') }}
                 </div>
             @endif
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="cart-table-container">
-                        <table class="table table-cart">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th class="thumbnail-col">Ảnh</th>
-                                    <th class="product-col">Tên sản phẩm</th>
-                                    <th class="price-col">Giá</th>
-                                    <th class="qty-col">Số lượng</th>
-                                    <th class="text-right">Tổng giá</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($carts as $item)
-                                    <tr class="product-row">
-                                        <td>
-                                            <a href="{{ route('deleteCart', $item->idCart) }}">Xóa</a>
-                                        </td>
-                                        <td>
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img width="80" src="{{ asset('images/' . $item->img) }}"
-                                                        alt="product">
-                                                </a>
+            @if (Session::has('user'))
 
+                <div class="row">
+                    <div class="col-lg-8">
 
-                                            </figure>
-                                        </td>
-                                        <td class="product-col">
-                                            <h5 class="product-title">
-                                                <a href="#" class="text-muted">{{ $item->name }}</a>
-                                            </h5>
-                                        </td>
-                                        <td>{{ number_format($item->price, '0', ',', '.') }}đ</td>
-                                        <td>
-                                            <div class="product-single-qty">
-                                                <input class="horizontal-quantity form-control" type="text"
-                                                    name="quantity" value="{{ $item->quantityProductCart }}">
-                                            </div><!-- End .product-single-qty -->
-                                        </td>
-                                        <td class="text-right"><span class="subtotal-price">@php
-                                            $total = $item->price * $item->quantityProductCart;
-                                            echo number_format($total, '0', ',', '.');
-                                        @endphp</span>đ</td>
+                        <div class="cart-table-container">
+                            <table class="table table-cart">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th class="thumbnail-col">Ảnh</th>
+                                        <th class="product-col">Tên sản phẩm</th>
+                                        <th class="price-col">Giá</th>
+                                        <th class="qty-col">Số lượng</th>
+                                        <th class="text-right">Tổng giá</th>
                                     </tr>
-                                @endforeach
-
-                            </tbody>
-
-
-                            <tfoot>
-                                <tr>
-                                    <td colspan="6" class="clearfix">
-                                        <div class="float-left">
-                                            <div class="cart-discount">
-                                                <form action="#">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            placeholder="Nhập voucher giảm giá" required>
-                                                        <div class="input-group-append">
-                                                            <button class="btn btn-sm" type="submit">Áp dụng</button>
-                                                        </div>
-                                                    </div><!-- End .input-group -->
-                                                </form>
-                                            </div>
-                                        </div><!-- End .float-left -->
+                                </thead>
+                                <tbody>
+                                    @if (count($carts) > 0)
+                                        @foreach ($carts as $item)
+                                            <tr class="product-row">
+                                                <td>
+                                                    <a href="{{ route('deleteCart', $item->idCart) }}">Xóa</a>
+                                                </td>
+                                                <td>
+                                                    <figure class="product-image-container">
+                                                        <a href="product.html" class="product-image">
+                                                            <img width="80" src="{{ asset('images/' . $item->img) }}"
+                                                                alt="product">
+                                                        </a>
 
 
-                                        <div class="float-right">
-                                            <button type="submit" class="btn btn-shop btn-update-cart">
-                                                Cập nhật giỏ
-                                            </button>
-                                        </div><!-- End .float-right -->
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div><!-- End .cart-table-container -->
-                </div><!-- End .col-lg-8 -->
+                                                    </figure>
+                                                </td>
+                                                <td class="product-col">
+                                                    <h5 class="product-title">
+                                                        <a href="#" class="text-muted">{{ $item->name }}</a>
+                                                    </h5>
+                                                </td>
+                                                <td>{{ number_format($item->price, '0', ',', '.') }}đ</td>
+                                                <td>
+                                                    <div class="product-single-qty">
+                                                        <input class="horizontal-quantity form-control" type="text"
+                                                            name="quantity" value="{{ $item->quantityProductCart }}">
+                                                    </div><!-- End .product-single-qty -->
+                                                </td>
+                                                <td class="text-right"><span
+                                                        class="subtotal-price">@php
+                                                            $total = $item->price * $item->quantityProductCart;
+                                                            echo number_format($total, '0', ',', '.');
+                                                        @endphp</span>đ
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr class="product-row">
+                                            <td colspan="6" align="center">Giỏ hàng của bạn trống</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
 
-                <div class="col-lg-4">
-                    <div class="cart-summary border p-5">
-                        <h4>CART TOTALS</h4>
 
-                        <table class="table table-totals">
-                            <tbody>
-                                <tr>
-                                    <td>Tổng tiền:</td>
-                                    <td>{{ number_format($totalPrice, '0', ',', '.') }}đ</td>
-                                </tr>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6" class="clearfix">
+                                            <div class="float-left">
+                                                <div class="cart-discount">
+                                                    <form action="#">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control form-control-sm"
+                                                                placeholder="Nhập voucher giảm giá" required>
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-sm" type="submit">Áp dụng</button>
+                                                            </div>
+                                                        </div><!-- End .input-group -->
+                                                    </form>
+                                                </div>
+                                            </div><!-- End .float-left -->
 
-                                <tr>
-                                    {{-- <td colspan="2" class="text-left">
+
+                                            <div class="float-right">
+                                                <button type="submit" class="btn btn-shop btn-update-cart">
+                                                    Cập nhật giỏ
+                                                </button>
+                                            </div><!-- End .float-right -->
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div><!-- End .cart-table-container -->
+                    </div><!-- End .col-lg-8 -->
+
+                    <div class="col-lg-4">
+                        <div class="cart-summary border p-5">
+                            <h4>CART TOTALS</h4>
+
+                            <table class="table table-totals">
+                                <tbody>
+                                    <tr>
+                                        <td>Tổng tiền:</td>
+                                        <td>{{ number_format($totalPrice, '0', ',', '.') }}đ</td>
+                                    </tr>
+
+                                    <tr>
+                                        {{-- <td colspan="2" class="text-left">
                                         <h4>Shipping</h4>
 
                                         <div class="form-group form-group-custom-control">
@@ -170,24 +180,28 @@
                                             </button>
                                         </form>
                                     </td> --}}
-                                </tr>
-                            </tbody>
+                                    </tr>
+                                </tbody>
 
-                            <tfoot>
-                                {{-- <tr>
+                                <tfoot>
+                                    {{-- <tr>
                                     <td>Total</td>
                                     <td>$17.90</td>
                                 </tr> --}}
-                            </tfoot>
-                        </table><br>
-
-                        <div class="checkout-methods">
-                            <a href="{{ route('checkout') }}" class="btn btn-block btn-dark">Tiến hành thanh toán
-                                <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div><!-- End .cart-summary -->
-                </div><!-- End .col-lg-4 -->
-            </div><!-- End .row -->
+                                </tfoot>
+                            </table><br>
+                            @if (count($carts) > 0)
+                                <div class="checkout-methods">
+                                    <a href="{{ route('checkout') }}" class="btn btn-block btn-dark">Tiến hành thanh toán
+                                        <i class="fa fa-arrow-right"></i></a>
+                                </div>
+                            @endif
+                        </div><!-- End .cart-summary -->
+                    </div><!-- End .col-lg-4 -->
+                </div><!-- End .row -->
+            @else
+                <p>Bạn cần đăng nhập để sử dụng giỏ hàng</p>
+            @endif
         </div><!-- End .container -->
 
         <div class="mb-6"></div><!-- margin -->

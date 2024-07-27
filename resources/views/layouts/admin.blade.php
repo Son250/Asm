@@ -113,7 +113,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="?act=dsdonhang">
+                <a class="nav-link" href="{{ url('admin/order/list') }}">
                     <i class="fas fa-fw fa-cart-arrow-down"></i>
                     <span>Đơn hàng mới</span></a>
 

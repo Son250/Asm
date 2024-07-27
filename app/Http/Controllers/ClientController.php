@@ -98,6 +98,7 @@ class ClientController extends Controller
         // if ($request->input('btnSubmit')) {
 
         $shipping_address = $request->input('fullname') . ' - ' . $request->input('email') . ' - ' . $request->input('phone') . ' - ' .  $request->input('address') . ' - ' . $request->input('note');
+       
         $todayDate = Carbon::now()->format('Y-m-d H:i:s');
         $payment_method = $request->input('payment-method');
 
@@ -114,8 +115,8 @@ class ClientController extends Controller
             ]);
 
             // Lấy đơn hàng mới nhất
-            $latestOrder = DB::table('orders')->latest()->first();
-
+            $latestOrder = DB::table('orders')->orderBy('order_date', 'desc')->first();
+            // dd($latestOrder);
 
             // Lưu chi tiết đơn hàng
             foreach ($carts as $item) {

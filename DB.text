@@ -1,0 +1,8 @@
+1.Quản lý khuyến mại
+    - ID
+    - Mã khuyến mại: string 
+    - Giảm giá: 100k
+    - Thời hạn: 21/07 -> 30/07
+    - Áp dụng: tất cả sản phẩm
+    - User: Mỗi người 1 lần 
+    
