@@ -19,8 +19,11 @@
                     @csrf
                     <div class="mb-3">
                         <label for="" class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" name="name" placeholder="Nhập tên danh mục..."
-                            value="{{ $category->name }}">
+                        <input type="text" class="form-control" required name="name"
+                            placeholder="Nhập tên danh mục..." value="{{ $category->name }}">
+                        @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <button class="btn btn-success" type="submit">Cập nhật</button>

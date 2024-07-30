@@ -20,22 +20,37 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Tên sản phẩm</label>
                         <input type="text" class="form-control" name="name">
+                        @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="mb-2">
                         <label for="" class="form-label">Hình ảnh</label>
                         <input type="file" class="form-control" name="img">
+                        @error('img')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="mb-2">
                         <label for="" class="form-label">Giá</label>
                         <input type="text" class="form-control" name="price">
+                        @error('price')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="mb-2">
                         <label for="" class="form-label">Mô tả</label>
                         <input type="text" class="form-control" name="description">
+                        @error('description')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="mb-2">
                         <label for="" class="form-label">Số lượng</label>
                         <input type="text" class="form-control" name="quantity">
+                        @error('quantity')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="mb-2">
@@ -45,8 +60,10 @@
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
 
-                          
                         </select>
+                        @error('iddm')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <button class="btn btn-success" type="submit" name="btnSubmit">Gửi</button>

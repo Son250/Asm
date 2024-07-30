@@ -58,26 +58,35 @@
                 </div>
             </div>
 
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
             <div class="checkout-discount">
                 <h5>Bạn có vourcher giảm giá?
-                    <button data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-                        aria-controls="collapseOne" class="btn btn-link btn-toggle">NHẬP MÃ</button>
+                    {{-- <button data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                        aria-controls="collapseOne" class="btn btn-link btn-toggle">NHẬP MÃ</button> --}}
                 </h5>
 
-                <div id="collapseTwo" class="collapse">
+                {{-- <div id="collapseTwo" class="collapse"> --}}
+                <div id="" class="">
                     <div class="feature-box">
                         <div class="feature-box-content">
                             <p>Nếu bạn có mã giảm giá, vui lòng nhập dưới đây.</p>
 
-                            <form action="#">
+                            <form action="{{ route('applyPromotion') }}" method="POST">
+                                @csrf
                                 <div class="input-group">
-                                    <input type="text" class="form-control form-control-sm w-auto"
-                                        placeholder="Coupon code" required="" />
+                                    <input type="text" name="ma_code" class="form-control form-control-sm w-auto"
+                                        placeholder="Nhập mã giảm giá ..." required="" />
                                     <div class="input-group-append">
                                         <button class="btn btn-sm mt-0" type="submit">
-                                            Apply Coupon
+                                            Áp dụng
                                         </button>
                                     </div>
+
+
                                 </div>
                             </form>
                         </div>
@@ -125,8 +134,7 @@
 
                                 <div class="form-group">
                                     <label class="order-comments">Ghi chú</label>
-                                    <textarea class="form-control" name="note" placeholder="Notes about your order, e.g. special notes for delivery."
-                                        ></textarea>
+                                    <textarea class="form-control" name="note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                                 </div>
 
                             </li>
@@ -174,7 +182,34 @@
                                             <span>{{ number_format($totalPrice, '0', ',', '.') }}đ</span>
                                         </td>
                                     </tr>
+                                    @isset($promotion)
+                                        <tr class="">
+                                            <td>
+                                                <h4>Mã giảm giá </h4>
+                                            </td>
 
+                                            <td class="price-col">
+                                                <span>-{{ number_format($promotion->discount_amount, '0', ',', '.') }}đ</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="">
+                                            <td>
+                                                <h4>Số tiền cần thanh toán </h4>
+                                            </td>
+
+                                            <td class="price-col">
+                                                <span>
+                                                    @php
+                                                        $totalPriceApplyPromotion =
+                                                            $totalPrice - $promotion->discount_amount;
+                                                        echo number_format($totalPriceApplyPromotion, '0', ',', '.');
+                                                    @endphp
+                                                    đ</span>
+                                                <input type="hidden" name="applyPromotion"
+                                                    value="{{ $totalPriceApplyPromotion }}">
+                                            </td>
+                                        </tr>
+                                    @endisset
                                 </tfoot>
                             </table>
 

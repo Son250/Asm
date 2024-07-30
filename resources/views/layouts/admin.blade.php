@@ -111,20 +111,42 @@
                 </div>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
+                    aria-expanded="true" aria-controls="collapseFive">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>Quản lý khuyến mại</span>
+                </a>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ url('admin/promotion/list') }}">Danh sách khuyến mại</a>
+                        <a class="collapse-item" href="{{ url('admin/promotion/add') }}"
+                            style="background-color: #48dbfb;">
+                            <i class="fas fa-fw fa-plus" style="color: #576574;"></i>
+                            <span>Thêm mới</span></a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('admin/order/list') }}">
                     <i class="fas fa-fw fa-cart-arrow-down"></i>
-                    <span>Đơn hàng mới</span></a>
+                    <span>Quản lý hóa đơn</span></a>
 
+            </li>
+            <li class="nav-item mb-3">
+                <a class="nav-link" href="{{ url('admin/banner/list') }}">
+                    <i class="fas fa-fw fa-comment"></i>
+                    <span>Quản lý banner</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item mb-3">
+            {{-- <li class="nav-item mb-3">
                 <a class="nav-link" href="?act=dsbinhluan">
                     <i class="fas fa-fw fa-comment"></i>
                     <span>Quản lý bình luận</span></a>
-            </li>
+            </li> --}}
 
             {{-- <li class="nav-item mb-3">
                 <a class="nav-link" href="?act=dsthongke">

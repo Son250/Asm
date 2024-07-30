@@ -47,7 +47,6 @@
                                 <th>Tổng giá</th>
                                 <th>Ngày đặt</th>
                                 <th>Trạng thái</th>
-
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -57,16 +56,18 @@
                                     <td>{{ $i + 1 }}</td>
                                     <td width='150px'>{{ $item->shipping_address }}</td>
                                     <td>
-
                                         {{ $item->product_quantity }}
                                     </td>
                                     <td>{{ number_format($item->total_amount, 0, ',', '.') }}đ</td>
                                     <td>{{ $item->order_date }} </td>
                                     <td>{{ $item->status }}</td>
                                     <td>
+                                        <a class="btn btn-warning" target="_blank" href="{{ route('showOrder', $item->id) }}">Xem hóa
+                                            đơn</a>
                                         <a class="btn btn-primary" href="{{ route('editOrder', $item->id) }}">Sửa</a>
-                                        <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa không?')"
-                                            href="">Hủy đơn</a>
+                                        <a class="btn btn-danger"
+                                            onclick="return confirm('Bạn chắc chắn muốn xóa không?')"
+                                            href="{{ route('deleteOrder', $item->id) }}">Hủy</a>
                                     </td>
                                 </tr>
                             @endforeach

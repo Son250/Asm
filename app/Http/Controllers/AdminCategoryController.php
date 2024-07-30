@@ -19,11 +19,13 @@ class AdminCategoryController extends Controller
     }
     function store(Request $request)
     {
-
+        $data = $request->validate([
+            'name' => 'required|min:3|max:50',
+        ]);
         DB::table('categories')->insert([
             'name' => $request->name,
         ]);
-        return redirect()->back()->with('status', 'Bạn đã thêm danh mục thành công');
+        return redirect('admin/category/list')->with('status', 'Bạn đã thêm danh mục thành công');
     }
     function edit($id)
     {
@@ -37,6 +39,9 @@ class AdminCategoryController extends Controller
     }
     function storeUpdate(Request $request, $id)
     {
+        $data = $request->validate([
+            'name' => 'required|min:3|max:50',
+        ]);
         DB::table('categories')->where('id', $id)->update([
             'name' => $request->name,
         ]);

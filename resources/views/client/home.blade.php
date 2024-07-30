@@ -5,43 +5,26 @@
             data-owl-options="{
         'loop': false
     }">
-            <div class="home-slide home-slide1 banner">
-                <img class="slide-bg" src="{{ asset('images/' . 'trangchu3.webp') }}" width="1903" height="499"
-                    alt="slider image">
-                {{-- <div class="container d-flex align-items-center">
-                    <div class="banner-layer appear-animate" data-animation-name="fadeInUpShorter">
-                        <h4 class="text-transform-none m-b-3">Find the Boundaries. Push Through!</h4>
-                        <h2 class="text-transform-none mb-0">Summer Sale</h2>
-                        <h3 class="m-b-3">70% Off</h3>
-                        <h5 class="d-inline-block mb-0">
-                            <span>Starting At</span>
-                            <b class="coupon-sale-text text-white bg-secondary align-middle"><sup>$</sup><em
-                                    class="align-text-top">199</em><sup>99</sup></b>
-                        </h5>
-                        <a href="category.html" class="btn btn-dark btn-lg">Shop Now!</a>
-                    </div>
-                    <!-- End .banner-layer -->
-                </div> --}}
-            </div>
-            <!-- End .home-slide -->
+            @php
+                $banners = DB::table('banners')->get();
+            @endphp
 
-            <div class="home-slide home-slide2 banner banner-md-vw">
+            @foreach ($banners as $item)
+                @if ($item->is_active == 'true')
+                    <div class="home-slide home-slide1 banner">
+                        <img class="slide-bg" src="{{ asset('images/' . $item->image) }}" width="1903" height="499"
+                            alt="slider image">
+                    </div>
+                @endif
+            @endforeach
+
+
+            <!-- End .home-slide -->
+            {{-- <div class="home-slide home-slide2 banner banner-md-vw">
                 <img class="slide-bg" style="background-color: #ccc;" width="1903" height="499"
                     src="{{ asset('images/' . 'trangchu2.webp') }}" alt="slider image">
-                {{-- <div class="container d-flex align-items-center">
-                    <div class="banner-layer d-flex justify-content-center appear-animate"
-                        data-animation-name="fadeInUpShorter">
-                        <div class="mx-auto">
-                            <h4 class="m-b-1">Extra</h4>
-                            <h3 class="m-b-2">20% off</h3>
-                            <h3 class="mb-2 heading-border">Accessories</h3>
-                            <h2 class="text-transform-none m-b-4">Summer Sale</h2>
-                            <a href="category.html" class="btn btn-block btn-dark">Shop All Sale</a>
-                        </div>
-                    </div>
-                    <!-- End .banner-layer -->
-                </div> --}}
-            </div>
+            </div> --}}
+
             <!-- End .home-slide -->
         </div>
         <!-- End .home-slider -->
@@ -147,7 +130,7 @@
                     @foreach ($products as $item)
                         <div class="product-default appear-animate" data-animation-name="fadeInRightShorter">
                             <figure>
-                                <a href="{{ route('detailProduct' , $item->id) }}">
+                                <a href="{{ route('detailProduct', $item->id) }}">
                                     <img src="{{ asset('images/' . $item->img) }}" width="280" height="280"
                                         alt="product">
                                     {{-- <img src="assets/views/images/products/product-1-2.jpg" width="280" height="280"
@@ -163,7 +146,7 @@
                                     <a href="#" class="product-category">{{ $item->categoryName }}</a>
                                 </div>
                                 <h3 class="product-title">
-                                    <a href="{{ route('detailProduct' , $item->id) }}">{{ $item->name }}</a>
+                                    <a href="{{ route('detailProduct', $item->id) }}">{{ $item->name }}</a>
                                 </h3>
                                 <div class="ratings-container">
                                     <div class="product-ratings">
@@ -182,7 +165,7 @@
                                 <div class="product-action">
                                     <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i
                                             class="icon-heart"></i></a>
-                                    <a href="{{ route('detailProduct' , $item->id) }}" class="btn-icon btn-add-cart"><i
+                                    <a href="{{ route('detailProduct', $item->id) }}" class="btn-icon btn-add-cart"><i
                                             class="fa fa-arrow-right"></i><span>XEM CHI TIẾT</span></a>
                                     <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
                                             class="fas fa-external-link-alt"></i></a>
@@ -222,7 +205,7 @@
                         @foreach ($products as $product)
                             <div class="product-default appear-animate" data-animation-name="fadeInRightShorter">
                                 <figure>
-                                    <a href="{{ route('detailProduct' , $product->id) }}">
+                                    <a href="{{ route('detailProduct', $product->id) }}">
                                         <img src="{{ asset('images/' . $product->img) }}" width="220" height="220"
                                             alt="product">
                                         {{-- <img src="assets/views/images/products/product-6-2.jpg" width="220"
@@ -237,7 +220,7 @@
                                         <a href="category.html" class="product-category">Category</a>
                                     </div> --}}
                                     <h3 class="product-title">
-                                        <a href="{{ route('detailProduct' , $product->id) }}">{{ $product->name }}</a>
+                                        <a href="{{ route('detailProduct', $product->id) }}">{{ $product->name }}</a>
                                     </h3>
                                     <div class="ratings-container">
                                         <div class="product-ratings">
@@ -259,7 +242,8 @@
                                     <div class="product-action">
                                         <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i
                                                 class="icon-heart"></i></a>
-                                        <a href="{{ route('detailProduct' , $product->id) }}" class="btn-icon btn-add-cart product-type-simple"><i
+                                        <a href="{{ route('detailProduct', $product->id) }}"
+                                            class="btn-icon btn-add-cart product-type-simple"><i
                                                 class="icon-shopping-cart"></i><span>XEM CHI TIẾT</span></a>
                                         <a href="ajax/product-quick-view.html" class="btn-quickview"
                                             title="Quick View"><i class="fas fa-external-link-alt"></i></a>

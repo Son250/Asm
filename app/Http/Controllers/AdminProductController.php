@@ -51,7 +51,7 @@ class AdminProductController extends Controller
             'iddm' => $request->iddm,
             'img' => $imageName,
         ]);
-        return redirect()->back()->with('status', 'Bạn đã thêm sp thành công');
+        return redirect('admin/product/list')->with('status', 'Bạn đã thêm sản phẩm thành công');
     }
     function storeUpdate(Request $request, $id)
     {

@@ -6,16 +6,12 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Thay đổi trạng thái </h1>
-            @if (session('status'))
-                <div class="alert alert-warning">
-                    {{ session('status') }}
-                </div>
-            @endif
+           
         </div>
         <div class="card shadow mb-4">
             <div class="card-body">
 
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="{{ route('updateOrder', $order->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @if (session('error'))
                         <div class="alert alert-danger">
@@ -50,7 +46,7 @@
                     <p><strong>Tổng tiền:</strong> {{ number_format($order->total_amount, 0, ',', '.') }}đ</p>
 
 
-                 
+
 
                     <button class="btn btn-success" type="submit" name="btnSubmit">Gửi</button>
                 </form>

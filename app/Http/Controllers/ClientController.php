@@ -6,7 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
+// use App\Mail\InvoiceMail;
+use App\Order;
+use App\Mail\InvoiceMail;
+use Illuminate\Support\Facades\Mail;
 
 class ClientController extends Controller
 {
@@ -62,6 +65,15 @@ class ClientController extends Controller
         return view('client.cart', compact('carts', 'totalPrice'));
     }
 
+    function updateCart(Request $request)
+    {
+        $user = Session::get('user');
+        DB::table('carts')->where('user_id', $user->id)->update([
+            'quantity' => $request->quantity,
+        ]);
+        return redirect('cart')->with('status', 'Cập nhật giỏ hàng thành công');
+    }
+
     function checkout(Request $request)
     {
         $user = Session::get('user');
@@ -84,6 +96,34 @@ class ClientController extends Controller
             ->delete();
         return back()->with('status', 'Bạn đã xóa thành công !');
     }
+
+    //Áp mã giảm giá
+    function applyPromotion(Request $request)
+    {
+        $user = Session::get('user');
+        $carts = DB::table('carts')->where('user_id', $user->id)
+            ->select('carts.*', 'products.*', 'carts.quantity as quantityProductCart', 'carts.id as idCart')
+            ->join('products', 'carts.product_id', '=', 'products.id')
+            ->get();
+        $totalPrice = $carts->reduce(function ($carry, $item) {
+            return $carry + $item->price * $item->quantityProductCart;
+        }, 0);
+
+
+        //áp mã giảm giá
+        $promotion = DB::table('promotions')->where('code', $request->ma_code)->first();
+        // dd($promotion);
+        $todayDate = Carbon::now();
+        if ($promotion) {
+            if ($todayDate->between($promotion->start_date, $promotion->end_date)) {
+                return view('client.checkout', compact('carts', 'totalPrice', 'promotion'))->with('status', 'Áp dụng mã giảm giá thành công');
+            } else {
+                return back()->with('status', 'Mã giảm giá không tồn tại hoặc đã hết hạn');
+            }
+        } else {
+            return back()->with('status', 'Mã giảm giá không tồn tại hoặc đã hết hạn');
+        }
+    }
     function checkoutStore(Request $request)
     {
         // dd('Đã đi vào hàm checkout store');
@@ -95,10 +135,16 @@ class ClientController extends Controller
         $totalPrice = $carts->reduce(function ($carry, $item) {
             return $carry + $item->price * $item->quantityProductCart;
         }, 0);
-        // if ($request->input('btnSubmit')) {
 
+        //Nếu tồn tại mã giảm giá
+        if ($request->input('applyPromotion')) {
+            $totalPrice = $request->input('applyPromotion');
+        }
+
+
+        // if ($request->input('btnSubmit')) {
         $shipping_address = $request->input('fullname') . ' - ' . $request->input('email') . ' - ' . $request->input('phone') . ' - ' .  $request->input('address') . ' - ' . $request->input('note');
-       
+
         $todayDate = Carbon::now()->format('Y-m-d H:i:s');
         $payment_method = $request->input('payment-method');
 
@@ -131,7 +177,88 @@ class ClientController extends Controller
             DB::table('carts')
                 ->where('user_id', $user->id)
                 ->delete();
+
+            //Xử lý gửi mail hóa đơn
+            // Tạo dữ liệu hóa đơn
+            // Tìm đơn hàng vừa tạo
+            $order = Order::with('orderItems')->findOrFail($latestOrder->id);
+
+            // Gửi email
+            // Mail::to($request->user()->email)->send(new InvoiceMail($order));
+            Mail::to($request->input('email'))->send(new InvoiceMail($order));
+
+
             return redirect('cart')->with('status', 'Bạn đã đặt hàng thành công!');
+        } else if ($request->input('payment-method') == "ONLINE") {
+            $data = $request->all();
+
+            $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+            $vnp_Returnurl = "https://localhost/vnpay_php/vnpay_return.php";
+            $vnp_TmnCode = "0F5SFEKL"; //Mã website tại VNPAY 
+            $vnp_HashSecret = "2WI7O0VUDU0T6DNFER322YK480ETBVAR"; //Chuỗi bí mật
+
+            $vnp_TxnRef = rand(00, 9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+            $vnp_OrderInfo = 'Nội dung thanh toán';
+            $vnp_OrderType = 'billpayment';
+            $vnp_Amount =
+                $totalPrice * 100;
+            $vnp_Locale = "vn";
+            $vnp_BankCode = "NCB";
+            $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+
+            $inputData = array(
+                "vnp_Version" => "2.1.0",
+                "vnp_TmnCode" => $vnp_TmnCode,
+                "vnp_Amount" => $vnp_Amount,
+                "vnp_Command" => "pay",
+                "vnp_CreateDate" => date('YmdHis'),
+                "vnp_CurrCode" => "VND",
+                "vnp_IpAddr" => $vnp_IpAddr,
+                "vnp_Locale" => $vnp_Locale,
+                "vnp_OrderInfo" => $vnp_OrderInfo,
+                "vnp_OrderType" => $vnp_OrderType,
+                "vnp_ReturnUrl" => $vnp_Returnurl,
+                "vnp_TxnRef" => $vnp_TxnRef
+
+            );
+
+            if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+                $inputData['vnp_BankCode'] = $vnp_BankCode;
+            }
+            if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+                $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+            }
+
+            //var_dump($inputData);
+            ksort($inputData);
+            $query = "";
+            $i = 0;
+            $hashdata = "";
+            foreach ($inputData as $key => $value) {
+                if ($i == 1) {
+                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                } else {
+                    $hashdata .= urlencode($key) . "=" . urlencode($value);
+                    $i = 1;
+                }
+                $query .= urlencode($key) . "=" . urlencode($value) . '&';
+            }
+
+            $vnp_Url = $vnp_Url . "?" . $query;
+            if (isset($vnp_HashSecret)) {
+                $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
+                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+            }
+            $returnData = array(
+                'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+            );
+            if (isset($_POST['btnSubmit'])) {
+                header('Location: ' . $vnp_Url);
+                die();
+            } else {
+                echo json_encode($returnData);
+            }
+            // vui lòng tham khảo thêm tại code demo
         } else {
             return redirect('checkout')->with('status', 'Vui lòng chọn phương thức thanh toán !');
         }

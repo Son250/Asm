@@ -19,7 +19,11 @@
                     @csrf
                     <div class="mb-3">
                         <label for="" class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" name="name" placeholder="Nhập tên danh mục...">
+                        <input type="text" class="form-control" required name="name"
+                            placeholder="Nhập tên danh mục...">
+                        @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <button class="btn btn-success" type="submit">Gửi</button>

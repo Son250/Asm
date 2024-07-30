@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminPromotionController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
@@ -47,13 +49,34 @@ Route::group(['middleware' => ['admin']], function () {
     //Admin User
     Route::get('admin/user/list', [AdminUserController::class, 'list']);
     Route::get('admin/user/add', [AdminUserController::class, 'add']);
+    Route::get('admin/user/deleteUser/{id}', [AdminUserController::class, 'deleteUser'])->name('deleteUser');
 
     //Admin Order
     Route::get('admin/order/list', [AdminOrderController::class, 'list']);
     Route::get('admin/order/edit/{id}', [AdminOrderController::class, 'edit'])->name('editOrder');
-    Route::post('admin/order/storeUpdateOrder/{id}', [AdminOrderController::class, 'storeUpdate'])->name('storeUpdateOrder');
+    Route::get('admin/order/showOrder/{id}', [AdminOrderController::class, 'showOrder'])->name('showOrder');
+    // Route::post('admin/order/storeUpdateOrder/{id}', [AdminOrderController::class, 'storeUpdate'])->name('storeUpdateOrder');
+    Route::post('admin/order/update/{id}', [AdminOrderController::class, 'update'])->name('updateOrder');
+    Route::get('admin/order/deleteOrder/{id}', [AdminOrderController::class, 'deleteOrder'])->name('deleteOrder');
 
+    //Admin Banner 
+    Route::get('admin/banner/list', [AdminBannerController::class, 'list']);
+    Route::get('admin/banner/add', [AdminBannerController::class, 'add']);
+    Route::post('admin/banner/storeAdd', [AdminBannerController::class, 'storeAdd'])->name('storeAdd');
+    Route::post('admin/banner/storeUpdate/{id}', [AdminBannerController::class, 'storeUpdate'])->name('storeUpdate');
+    Route::get('admin/banner/editBanner/{id}', [AdminBannerController::class, 'editBanner'])->name('editBanner');
+    Route::get('admin/banner/delete/{id}', [AdminBannerController::class, 'deleteBanner'])->name('deleteBanner');
+
+    //Admin Promotion : Quản lý khuyến mại
+    Route::get('admin/promotion/list', [AdminPromotionController::class, 'list']);
+    Route::get('admin/promotion/add', [AdminPromotionController::class, 'add']);
+    Route::get('admin/promotion/edit/{id}', [AdminPromotionController::class, 'edit'])->name('editPromotion');
+    Route::get('admin/promotion/deletePromotion/{id}', [AdminPromotionController::class, 'deletePromotion'])->name('deletePromotion');
+    Route::post('admin/promotion/storeAdd', [AdminPromotionController::class, 'storeAdd']);
+    Route::post('admin/promotion/storeUpdate/{id}', [AdminPromotionController::class, 'storeUpdate'])->name('storeUpdate');
 });
+
+
 //client
 Route::get('home', [ClientController::class, 'home']);
 Route::get('category/{id}', [ClientController::class, 'category'])->name('category');
@@ -70,3 +93,12 @@ Route::get('logout', [AccountController::class, 'logout'])->name('logout');
 Route::post('loginStore', [AccountController::class, 'loginStore'])->name('loginStore');
 Route::post('register', [AccountController::class, 'register'])->name('register');
 Route::get('dashbroad', [AccountController::class, 'dashbroad'])->name('dashbroad');
+
+
+
+//Cập nhật giỏ hàng
+Route::post('updateCart', [ClientController::class, 'updateCart'])->name('updateCart');
+
+
+/// Áp dụng mã giảm giá
+Route::post('applyPromotion', [ClientController::class, 'applyPromotion'])->name('applyPromotion');
