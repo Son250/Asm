@@ -21,6 +21,9 @@
                             <div class="mb-3">
                                 <label for="" class="form-label">Mã CODE</label>
                                 <input type="text" class="form-control" name="code" value="{{ $promotion->code }}">
+                                @error('code')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                         </div>
@@ -28,6 +31,9 @@
                             <div class="mb-2">
                                 <label for="" class="form-label">Tên mã</label>
                                 <input type="text" class="form-control" name="title" value="{{ $promotion->title }}">
+                                @error('title')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -35,12 +41,18 @@
                     <div class="mb-2">
                         <label for="" class="form-label">Mô tả</label>
                         <input type="text" class="form-control" name="description" value="{{ $promotion->description }}">
+                        @error('description')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="mb-2">
                         <label for="" class="form-label">Số tiền giảm giá</label>
                         <input type="text" class="form-control" name="discount_amount"
                             value="{{ $promotion->discount_amount }}">
+                        @error('discount_amount')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="row">
@@ -49,6 +61,9 @@
                                 <label for="" class="form-label">Ngày bắt đầu</label>
                                 <input type="date" class="form-control" name="start_date"
                                     value="{{ $promotion->start_date }}">
+                                @error('start_date')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -56,11 +71,12 @@
                                 <label for="" class="form-label">Ngày kết thúc</label>
                                 <input type="date" class="form-control" name="end_date"
                                     value="{{ $promotion->end_date }}">
+                                @error('end_date')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                     </div>
-
-
 
                     <button class="btn btn-success" type="submit" name="btnSubmit">Gửi</button>
                 </form>

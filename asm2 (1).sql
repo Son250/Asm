@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 20, 2024 at 04:01 PM
+-- Generation Time: Aug 03, 2024 at 01:42 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -18,8 +18,36 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `asm`
+-- Database: `asm2`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banners`
+--
+
+CREATE TABLE `banners` (
+  `id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `is_active` enum('true','false') COLLATE utf8mb3_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `banners`
+--
+
+INSERT INTO `banners` (`id`, `title`, `image`, `description`, `is_active`, `created_at`, `updated_at`) VALUES
+(4, 'Ads 1', '1722253125-ads-2.webp', NULL, 'false', NULL, NULL),
+(5, 'Ads 3', '1722253151-ads-3.webp', NULL, 'false', NULL, NULL),
+(6, 'Ads 4', '1722253184-ads-4.webp', NULL, 'false', NULL, NULL),
+(7, 'Trang chủ 1', '1722253595-trangchu1.webp', NULL, 'true', NULL, NULL),
+(8, 'Trang chủ 2', '1722253607-trangchu2.webp', NULL, 'true', NULL, NULL),
+(9, 'Trang chủ 3', '1722253616-trangchu3.webp', NULL, 'true', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -36,6 +64,13 @@ CREATE TABLE `carts` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `product_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(56, 1, 22, 3, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -44,7 +79,7 @@ CREATE TABLE `carts` (
 
 CREATE TABLE `categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -66,11 +101,11 @@ INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -82,7 +117,7 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -112,9 +147,9 @@ CREATE TABLE `orders` (
   `product_quantity` int NOT NULL,
   `total_amount` int NOT NULL,
   `order_date` timestamp NOT NULL,
-  `payment_method` enum('COD','ONLINE') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `shipping_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('Chờ xác nhận','Đã xác nhận','Đang giao hàng','Hoàn thành','Hủy đơn') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_method` enum('COD','ONLINE') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shipping_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('Chờ xác nhận','Đã xác nhận','Đang giao hàng','Hoàn thành','Hủy đơn') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `customer_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -125,10 +160,13 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `product_quantity`, `total_amount`, `order_date`, `payment_method`, `shipping_address`, `status`, `customer_id`, `created_at`, `updated_at`) VALUES
-(1, 2, 75760000, '2024-07-20 07:50:02', 'COD', 'Nguyễn Sơn - banhsontv@gmail.com - 0973657594 - Thôn Đồng Trữ - sda', 'Chờ xác nhận', 1, NULL, NULL),
-(2, 1, 7900000, '2024-07-20 07:54:24', 'COD', 'Nguyễn Sơn - anhsongoku123@gmail.com - 0973657594 - Thôn Đồng Trữ - dsa', 'Chờ xác nhận', 1, NULL, NULL),
-(3, 2, 71760000, '2024-07-20 07:55:48', 'COD', 'Nguyễn Sơn 2 - sonnvph33874@fpt.edu.vn - 0973657594 - Thôn Đồng Trữ - sđsa', 'Chờ xác nhận', 1, NULL, NULL),
-(4, 2, 75660000, '2024-07-20 08:53:30', 'COD', 'Nguyễn Sơn3 - anhsongoku123@gmail.com - 0973657594 - Thôn Đồng Trữ - hvg', 'Chờ xác nhận', 1, NULL, NULL);
+(12, 3, 139040000, '2024-07-28 15:55:47', 'COD', 'Tuấn Hamez - banhsontv@gmail.com - 0973657594 - Thôn Đồng Trữ - xã phú nghĩa - huyện chương mỹ - Hà Nội - Giao cho mình vào buổi chiều bạn nhé !', 'Đang giao hàng', 1, NULL, '2024-07-29 10:27:56'),
+(13, 2, 91650000, '2024-07-29 14:47:09', 'COD', 'Sơn Vương 999 - sonnvph33874@fpt.edu.vn - 0973657594 - Thôn Đồng Trữ - ok bạn nhé', 'Chờ xác nhận', 1, NULL, NULL),
+(18, 2, 89160000, '2024-07-29 14:56:43', 'COD', 'Nguyễn Sơn - banhsontv@gmail.com - 0973657594 - Thôn Đồng Trữ - 123456789', 'Hoàn thành', 1, NULL, '2024-07-29 14:58:05'),
+(20, 1, 39780000, '2024-07-29 15:04:10', 'COD', 'Ngô Văn Hoàng - ngovanhoang10102004@gmail.com - 0973657594 - Xã Hữu Văn - Huyện Chương Mỹ - Hà Nội - Giao vào bủi sáng cho em ạ', 'Hủy đơn', 1, NULL, '2024-07-30 03:45:30'),
+(21, 2, 105960000, '2024-07-30 09:24:45', 'COD', 'Nguyễn Sơn - anhsongoku123@gmail.com - 0973657594 - Thôn Đồng Trữ - ', 'Chờ xác nhận', 1, NULL, NULL),
+(23, 2, 64670000, '2024-07-30 15:28:28', 'COD', 'Nguyễn Sơn - sonnvph33874@fpt.edu.vn - 0973657594 - Thôn Đồng Trữ - dsadsadsadscsacsaxzv', 'Đã xác nhận', 1, NULL, '2024-07-30 15:29:15'),
+(24, 2, 33780000, '2024-08-03 00:33:45', 'COD', 'Nguyễn Sơn - sonnvph33874@fpt.edu.vn - 0973657594 - Thôn Đồng Trữ - ádfg', 'Đang giao hàng', 1, NULL, '2024-08-03 00:35:59');
 
 -- --------------------------------------------------------
 
@@ -151,8 +189,20 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(1, 1, 19, 1, 15990000, NULL, NULL),
-(2, 1, 24, 3, 19890000, NULL, NULL);
+(11, 12, 22, 1, 27790000, NULL, NULL),
+(12, 12, 23, 3, 24690000, NULL, NULL),
+(13, 12, 29, 2, 18590000, NULL, NULL),
+(14, 13, 19, 2, 15990000, NULL, NULL),
+(15, 13, 24, 3, 19890000, NULL, NULL),
+(18, 18, 24, 2, 19890000, NULL, NULL),
+(19, 18, 23, 2, 24690000, NULL, NULL),
+(21, 20, 24, 2, 19890000, NULL, NULL),
+(22, 21, 21, 3, 29990000, NULL, NULL),
+(23, 21, 19, 1, 15990000, NULL, NULL),
+(26, 23, 27, 2, 22590000, NULL, NULL),
+(27, 23, 28, 1, 29490000, NULL, NULL),
+(28, 24, 19, 1, 15990000, NULL, NULL),
+(29, 24, 22, 1, 27790000, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -161,8 +211,8 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`, 
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -174,11 +224,11 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -193,10 +243,10 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `products` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` int NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` int NOT NULL,
   `iddm` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -208,7 +258,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `img`, `price`, `description`, `quantity`, `iddm`, `created_at`, `updated_at`) VALUES
-(16, 'iPhone 11 128GB | Chính Hãng VN', '1721227171-iphone 11.jpg', 7900000, 'Sau khi iPhone 14 chính hãng lên kệ, giá iPhone 14 series xách tay liên tục giảm giá lên tới hơn chục triệu đồng', 22, 1, NULL, NULL),
+(16, 'iPhone 11 128GB', '1721227171-iphone 11.jpg', 7900000, 'Sau khi iPhone 14 chính hãng lên kệ, giá iPhone 14 series xách tay liên tục giảm giá lên tới hơn chục triệu đồng', 22, 1, NULL, NULL),
 (19, 'iPhone 13 128GB | Chính hãng VN/A', '1721227898-iphone 13 2.webp', 15990000, 'Sau khi iPhone 14 chính hãng lên kệ, giá iPhone 14 series xách tay liên tục giảm giá lên tới hơn chục triệu đồng', 29, 1, NULL, NULL),
 (21, 'Acer Gaming 3 Pro | Chính hãng VietNam', '1721229777-acer gaming 1.webp', 29990000, 'Laptop Acer Nitro 5 chính hãng, giá rẻ, trả góp 0%, bảo hành 12 tháng, đổi mới 30 ngày. Mua laptop Gaming Acer Nitro 7, 5 giao nhanh tại đây!', 12, 2, NULL, NULL),
 (22, 'Samsung Galaxy Z Fold5 12GB 256GB', '1721229880-galaxy-z-fold-5-kem-1.webp', 27790000, 'Samsung Galaxy Z Fold5 12GB 256GB - Hiệu năng vượt trội, thiết kế mỏng nhẹ hơn Samsung Galaxy Z Fold5 là phân khúc smartphone gập đáng được mong chờ nhất trong năm 2023 khi sở hữu thiết kế đột phá cùng nhiều tính năng ấn tượng. Với màn hình gập mở linh hoạt, Z Fold5 mang tới cho bạn trải nghiệm sử dụng của cả điện thoại thông minh lẫn máy tính bảng. Bên cạnh đó, máy còn đi kèm với nhiều tính năng công nghệ hàng đầu, sẵn sàng phục vụ được những yêu cầu sử dụng phức tạp của người dùng.  Update mới nhất: điện thoại gập thế hệ thứ 6 hay Samsung Z Fold 6 sẽ chính thức ra mắt đầu tháng 7/2024 với nâng cấp mạnh mẽ về phần cứng và tích hợp AI. Cùng CellphoneS liên tục cập nhật thông tin cấu hình, giá bán, ngày về hàng Z Fold 6 tại Việt Nam nhé!  Nâng tầm khả năng quay chụp với cụm camera lên tới 50MP Samsung Galaxy Z Fold5 nổi bật với khả năng quay chụp siêu sắc nét thông qua hệ thống máy ảnh với độ phân giải lên tới 50MP. Cụ thể, smartphone gập mới này được trang bị cụm 3 camera với độ sắc nét lần lượt là 50 + 10 + 12MP.', 9, 1, NULL, NULL),
@@ -223,16 +273,43 @@ INSERT INTO `products` (`id`, `name`, `img`, `price`, `description`, `quantity`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `promotions`
+--
+
+CREATE TABLE `promotions` (
+  `id` bigint UNSIGNED NOT NULL,
+  `code` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb3_unicode_ci,
+  `discount_amount` decimal(10,2) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `promotions`
+--
+
+INSERT INTO `promotions` (`id`, `code`, `title`, `description`, `discount_amount`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
+(2, 'IUKGJHFGHFG', 'Giảm giá tháng 7', 'Giảm giá tất cả sp', '300000.00', '2024-07-29', '2024-07-30', NULL, NULL),
+(3, 'OIUYTREWSD', 'Giảm giá tiếp cho ae 29', 'Giảm 10tr cho ae', '10000000.00', '2024-07-29', '2024-08-04', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` enum('Admin','User') COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -241,12 +318,18 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Hoàng Xuân Đại', 'daihoangxua0204@gmail.com', '2024-07-15 09:56:10', '123456789', NULL, '2024-07-16 09:56:10', '2024-07-16 09:56:10');
+INSERT INTO `users` (`id`, `name`, `email`, `role`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Sơn Vương 999', 'sonnvph33874@fpt.edu.vn', 'Admin', NULL, '$2y$12$ANZPPirNIH.D6p9VvmM9G.H/AoXrFxf73a6u9AC3Am5xkgmwFzz92', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `banners`
+--
+ALTER TABLE `banners`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `carts`
@@ -311,6 +394,13 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `promotions`
+--
+ALTER TABLE `promotions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `code` (`code`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -322,16 +412,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `banners`
+--
+ALTER TABLE `banners`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -349,13 +445,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -370,10 +466,16 @@ ALTER TABLE `products`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
+-- AUTO_INCREMENT for table `promotions`
+--
+ALTER TABLE `promotions`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

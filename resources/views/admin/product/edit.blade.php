@@ -20,23 +20,38 @@
                     <div>
                         <label for="" class="form-label">Tên sản phẩm</label>
                         <input type="text" class="form-control" name="name" value="{{ $product->name }}">
+                        @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="" class="form-label">Hình ảnh</label> <br>
                         <img width="100px" src="{{ asset('images/' . $product->img) }}" alt="">
                         <input type="file" class="form-control" name="img">
+                        @error('img')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="" class="form-label">Giá</label>
                         <input type="text" class="form-control" name="price" value="{{ $product->price }}">
+                        @error('price')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="" class="form-label">Mô tả</label>
                         <input type="text" class="form-control" name="description" value="{{ $product->description }}">
+                        @error('description')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="" class="form-label">Số lượng</label>
                         <input type="text" class="form-control" name="quantity" value="{{ $product->quantity }}">
+                        @error('quantity')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <br>
                     <div>
@@ -47,16 +62,16 @@
                                     {{ $item->name }}</option>
                             @endforeach
 
-
                         </select>
-
+                        @error('iddm')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <button class="btn btn-success" type="submit" name="btnSubmit">Gửi</button>
                 </form>
             </div>
         </div>
-
 
     </div>
     <!-- /.container-fluid -->

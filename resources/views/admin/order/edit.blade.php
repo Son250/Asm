@@ -6,7 +6,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Thay đổi trạng thái </h1>
-           
+
         </div>
         <div class="card shadow mb-4">
             <div class="card-body">
@@ -29,8 +29,10 @@
                                     <option value="{{ $loop->iteration }}"
                                         @if ($item == $order->status) selected @endif>{{ $item }}</option>
                                 @endforeach
-
                             </select>
+                            @error('status')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
                     <ul>
@@ -44,8 +46,6 @@
                     </ul>
                     <p><strong>Ngày đặt:</strong> {{ $order->order_date }}</p>
                     <p><strong>Tổng tiền:</strong> {{ number_format($order->total_amount, 0, ',', '.') }}đ</p>
-
-
 
 
                     <button class="btn btn-success" type="submit" name="btnSubmit">Gửi</button>
