@@ -93,72 +93,83 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('checkoutStore') }}" method="POST" id="checkout-form">
-                @csrf
-                <div class="row">
-                    <div class="col-lg-7">
-                        <ul class="checkout-steps">
-                            <li>
-                                <h4 class="step-title">Thông tin đơn hàng</h4>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Họ tên
-                                                <abbr class="required" title="required">*</abbr>
-                                            </label>
-                                            <input type="text" name="fullname" class="form-control" required />
-                                        </div>
-                                    </div>
+            @if (isset($cart))
+                <form action="{{ route('checkoutStore') }}" method="POST" id="checkout-form">
+                @else
+                    <form action="{{ route('buyNowStore', $productBuyNow->id) }}" method="POST" id="checkout-form">
+            @endif
 
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Email
-                                                <abbr class="required" title="required">*</abbr>
-                                            </label>
-                                            <input type="email" name="email" class="form-control" required />
-                                        </div>
+            @csrf
+            <div class="row">
+                <div class="col-lg-7">
+                    <ul class="checkout-steps">
+                        <li>
+                            <h4 class="step-title">Thông tin đơn hàng</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Họ tên
+                                            <abbr class="required" title="required">*</abbr>
+                                        </label>
+                                        <input type="text" name="fullname" class="form-control"
+                                            placeholder="Nhập họ và tên" required />
                                     </div>
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label>Địa chỉ</label>
-                                    <input type="text" class="form-control" name="address" />
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Email
+                                            <abbr class="required" title="required">*</abbr>
+                                        </label>
+                                        <input type="email" name="email" class="form-control" placeholder="Nhập email"
+                                            required />
+                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label>SĐT<abbr class="required" title="required">*</abbr></label>
-                                    <input type="tel" class="form-control" name="phone" required />
-                                </div>
 
-                                <div class="form-group">
-                                    <label class="order-comments">Ghi chú</label>
-                                    <textarea class="form-control" name="note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                                </div>
+                            <div class="form-group">
+                                <label>Địa chỉ
+                                    <abbr class="required" title="required">*</abbr>
+                                </label>
+                                <input type="text" class="form-control" name="address" placeholder="Nhập địa chỉ" />
+                            </div>
 
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- End .col-lg-8 -->
+                            <div class="form-group">
+                                <label>SĐT<abbr class="required" title="required">*</abbr></label>
+                                <input type="tel" class="form-control" name="phone" placeholder="Nhập số điện thoại"
+                                    required />
+                            </div>
 
-                    <div class="col-lg-5">
-                        <div class="order-summary border p-4">
-                            <h3>Đơn hàng của bạn</h3>
+                            <div class="form-group">
+                                <label class="order-comments">Ghi chú</label>
+                                <textarea class="form-control" name="note" placeholder="Ghi chú/Lưu ý về đơn hàng của bạn dành cho cửa hàng"></textarea>
+                            </div>
 
-                            <table class="table table-mini-cart">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">Sản phẩm</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End .col-lg-8 -->
+
+                <div class="col-lg-5">
+                    <div class="order-summary border p-4">
+                        <h3>Đơn hàng của bạn</h3>
+
+                        <table class="table table-mini-cart">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Sản phẩm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (isset($carts))
                                     @foreach ($carts as $item)
                                         <tr>
                                             <td class="product-col">
                                                 <p class="product-title">
                                                     {{ $item->name }}
-                                                    <span class="product-qty">x {{ $item->quantityProductCart }}</span>
+                                                    <span class="product-qty"> x{{ $item->quantityProductCart }}</span>
                                                 </p>
                                             </td>
 
@@ -170,67 +181,85 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
-                                </tbody>
-                                <tfoot>
-                                    <tr class="cart-subtotal">
-                                        <td>
-                                            <h4>Tổng </h4>
+                                @else
+                                    <tr>
+                                        <td class="product-col">
+                                            <p class="product-title">
+                                                {{ $productBuyNow->name }}
+                                                <span class="product-qty"> x1</span>
+                                            </p>
                                         </td>
 
                                         <td class="price-col">
-                                            <span>{{ number_format($totalPrice, '0', ',', '.') }}đ</span>
+                                            <span>{{ number_format($productBuyNow->price, '0', ',', '.') }}</span>đ
                                         </td>
                                     </tr>
-                                    @isset($promotion)
-                                        <tr class="">
-                                            <td>
-                                                <h4>Mã giảm giá </h4>
-                                            </td>
+                                @endif
 
-                                            <td class="price-col">
-                                                <span>-{{ number_format($promotion->discount_amount, '0', ',', '.') }}đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr class="">
-                                            <td>
-                                                <h4>Số tiền cần thanh toán </h4>
-                                            </td>
+                            </tbody>
+                            <tfoot>
+                                <tr class="cart-subtotal">
+                                    <td>
+                                        <h4>Tổng </h4>
+                                    </td>
 
-                                            <td class="price-col">
-                                                <span>
-                                                    @php
-                                                        $totalPriceApplyPromotion =
-                                                            $totalPrice - $promotion->discount_amount;
-                                                        echo number_format($totalPriceApplyPromotion, '0', ',', '.');
-                                                    @endphp
-                                                    đ</span>
-                                                <input type="hidden" name="applyPromotion"
-                                                    value="{{ $totalPriceApplyPromotion }}">
-                                            </td>
-                                        </tr>
-                                    @endisset
-                                </tfoot>
-                            </table>
+                                    <td class="price-col">
+                                        @if (isset($totalPrice))
+                                            <span>{{ number_format($totalPrice, '0', ',', '.') }}đ</span>
+                                        @else
+                                            <span>{{ number_format($productBuyNow->price, '0', ',', '.') }}đ</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @isset($promotion)
+                                    <tr class="">
+                                        <td>
+                                            <h4>Mã giảm giá </h4>
+                                        </td>
 
-                            <div class="payment-methods">
-                                <h4 class="">Phương thức thanh toán</h4>
-                                <input type="radio" checked value="COD" name="payment-method" id="cod">
-                                <label for="cod">Thanh toán tại nhà</label> <br>
-                                <input type="radio" value="ONLINE" name="payment-method" id="online">
-                                <label for="online">Thanh toán Online</label>
-                            </div> <br>
+                                        <td class="price-col">
+                                            <span>-{{ number_format($promotion->discount_amount, '0', ',', '.') }}đ</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td>
+                                            <h4>Số tiền cần thanh toán </h4>
+                                        </td>
 
-                            <button type="submit" name="btnSubmit" class="btn btn-dark btn-place-order"
-                                form="checkout-form">
-                                Thanh toán
-                            </button>
-                        </div>
-                        <!-- End .cart-summary -->
+                                        <td class="price-col">
+                                            <span>
+                                                @php
+                                                    $totalPriceApplyPromotion =
+                                                        $totalPrice - $promotion->discount_amount;
+                                                    echo number_format($totalPriceApplyPromotion, '0', ',', '.');
+                                                @endphp
+                                                đ</span>
+                                            <input type="hidden" name="applyPromotion"
+                                                value="{{ $totalPriceApplyPromotion }}">
+                                        </td>
+                                    </tr>
+                                @endisset
+                            </tfoot>
+                        </table>
+
+                        <div class="payment-methods">
+                            <h4 class="">Phương thức thanh toán</h4>
+                            <input type="radio" checked value="COD" name="payment-method" id="cod">
+                            <label for="cod">Thanh toán tại nhà</label> <br>
+                            <input type="radio" value="ONLINE" name="payment-method" id="online">
+                            <label for="online">Thanh toán Online</label>
+                        </div> <br>
+
+                        <button type="submit" name="btnSubmit" class="btn btn-dark btn-place-order"
+                            form="checkout-form">
+                            Thanh toán
+                        </button>
                     </div>
-                    <!-- End .col-lg-4 -->
+                    <!-- End .cart-summary -->
                 </div>
-                <!-- End .row -->
+                <!-- End .col-lg-4 -->
+            </div>
+            <!-- End .row -->
             </form>
         </div>
         <!-- End .container -->

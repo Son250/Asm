@@ -130,12 +130,12 @@
                                     <button type="submit" name="btnSubmit" class="btn btn-dark  mr-2">Thêm vào giỏ
                                         hàng</button>
                                 @else
-                                    <button type="button" class="btn btn-dark  mr-2">Bạn cần đăng nhập để thêm vào giỏ
+                                    <button type="button" class="btn btn-dark  mr-2"><a href="{{ url('login') }}" style="color:white">Bạn cần đăng nhập</a>
                                     </button>
                                 @endif
                             </form>
 
-                            <a href="cart.html" class="btn btn-gray view-cart d-none">Xem giỏ hàng</a>
+                            <a href="{{ url('cart') }}" class="btn btn-gray view-cart d-none">Xem giỏ hàng</a>
                         </div>
                         <!-- End .product-action -->
 

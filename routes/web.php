@@ -85,7 +85,9 @@ Route::post('addToCart/{id}', [ClientController::class, 'addToCart'])->name('add
 Route::get('cart', [ClientController::class, 'cart']);
 Route::get('checkout', [ClientController::class, 'checkout'])->name('checkout');
 Route::post('checkoutStore', [ClientController::class, 'checkoutStore'])->name('checkoutStore');
+Route::post('buyNowStore/{id}', [ClientController::class, 'buyNowStore'])->name('buyNowStore');
 Route::get('deleteCart/{id}', [ClientController::class, 'deleteCart'])->name('deleteCart');
+Route::get('buyNow/{id}', [ClientController::class, 'buyNow'])->name('buyNow');
 
 //account
 Route::get('login', [AccountController::class, 'login']);
@@ -102,3 +104,4 @@ Route::post('updateCart', [ClientController::class, 'updateCart'])->name('update
 
 /// Áp dụng mã giảm giá
 Route::post('applyPromotion', [ClientController::class, 'applyPromotion'])->name('applyPromotion');
+Route::post('applyPromotionBuyNow/{id}', [ClientController::class, 'applyPromotionBuyNow'])->name('applyPromotionBuyNow');

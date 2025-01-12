@@ -7,16 +7,16 @@
                 <nav aria-label="breadcrumb" class="breadcrumb-nav">
                     <div class="container">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="demo4.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="category.html">Shop</a></li>
+                            <li class="breadcrumb-item"><a href="demo4.html">Trang chủ</a></li>
+                            {{-- <li class="breadcrumb-item"><a href="category.html">Shop</a></li> --}}
                             <li class="breadcrumb-item active" aria-current="page">
-                                My Account
+                                Tài khoản
                             </li>
                         </ol>
                     </div>
                 </nav>
 
-                <h1>My Account</h1>
+                <h1>Tài khoản</h1>
             </div>
         </div>
 
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="heading mb-1">
-                                <h2 class="title">Login</h2>
+                                <h2 class="title">Đăng nhập</h2>
                             </div>
 
                             <form action="{{ route('loginStore') }}" method="POST">
@@ -37,38 +37,36 @@
                                     </div>
                                 @endif
                                 <label for="login-email">
-                                    Username or email address
+                                    Email
                                     <span class="required">*</span>
                                 </label>
-                                <input type="email" name="email" class="form-input form-wide" id="login-email"
+                                <input type="email" name="email" class="form-input form-wide" placeholder="Nhập địa chỉ email" id="login-email"
                                     required />
 
                                 <label for="login-password">
-                                    Password
+                                    Mật khẩu
                                     <span class="required">*</span>
                                 </label>
-                                <input type="password" name="password" class="form-input form-wide" id="login-password"
+                                <input type="password" name="password" class="form-input form-wide" placeholder="Nhập mật khẩu" id="login-password"
                                     required />
 
                                 <div class="form-footer">
                                     <div class="custom-control custom-checkbox mb-0">
                                         <input type="checkbox" class="custom-control-input" id="lost-password" />
-                                        <label class="custom-control-label mb-0" for="lost-password">Remember
-                                            me</label>
+                                        <label class="custom-control-label mb-0" for="lost-password">Ghi nhớ tài khoản</label>
                                     </div>
 
-                                    <a href="forgot-password.html"
-                                        class="forget-password text-dark form-footer-right">Forgot
-                                        Password?</a>
+                                    <a href="#"
+                                        class="forget-password text-dark form-footer-right">Quên mật khẩu?</a>
                                 </div>
                                 <button type="submit" class="btn btn-dark btn-md w-100">
-                                    LOGIN
+                                    ĐĂNG NHẬP
                                 </button>
                             </form>
                         </div>
                         <div class="col-md-6">
                             <div class="heading mb-1">
-                                <h2 class="title">Register</h2>
+                                <h2 class="title">Đăng ký</h2>
                             </div>
 
                             <form action="{{ route('register') }}" method="post">
@@ -79,29 +77,29 @@
                                     </div>
                                 @endif
                                 <label for="register-email">
-                                    Fullname
+                                    Họ và tên
                                     <span class="required">*</span>
                                 </label>
-                                <input type="text" name="name" class="form-input form-wide" id="register-email"
+                                <input type="text" name="name" class="form-input form-wide" placeholder="Nhập họ và tên" id="register-email"
                                     required />
 
                                 <label for="register-email">
-                                    Email address
+                                    Địa chỉ email
                                     <span class="required">*</span>
                                 </label>
-                                <input type="email" name="email" class="form-input form-wide" id="register-email"
+                                <input type="email" name="email" class="form-input form-wide" placeholder="Nhập địa chỉ email" id="register-email"
                                     required />
 
                                 <label for="register-password">
-                                    Password
+                                    Mật khẩu
                                     <span class="required">*</span>
                                 </label>
-                                <input type="password" name="password" class="form-input form-wide" id="register-password"
+                                <input type="password" name="password" class="form-input form-wide" placeholder="Nhập mật khẩu" id="register-password"
                                     required />
 
                                 <div class="form-footer mb-2">
                                     <button type="submit" class="btn btn-dark btn-md w-100 mr-0">
-                                        Register
+                                        Đăng ký
                                     </button>
                                 </div>
                             </form>

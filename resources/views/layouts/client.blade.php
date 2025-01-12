@@ -11,9 +11,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Porto - Bootstrap eCommerce Template</title>
+    <title>Nguyễn Viết Sơn</title>
     <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Porto - Bootstrap eCommerce Template">
+    <meta name="description" content="Nguyễn Viết Sơn">
     <meta name="author" content="SW-THEMES">
 
     <!-- Favicon -->
@@ -52,17 +52,7 @@
 
 <body>
     <div class="page-wrapper">
-        <div class="top-notice bg-primary text-white">
-            <div class="container text-center">
-                <h5 class="d-inline-block">Get Up to <b>40% OFF</b> New-Season Styles</h5>
-                <a href="category.html" class="category">MEN</a>
-                <a href="category.html" class="category ml-2 mr-3">WOMEN</a>
-                <small>* Limited time only.</small>
-                <button title="Close (Esc)" type="button" class="mfp-close">x</button>
-            </div>
-            <!-- End .container -->
-        </div>
-        <!-- End .top-notice -->
+
 
         <header class="header">
             <div class="header-top">
@@ -77,23 +67,17 @@
                             <a href="#">Links</a>
                             <div class="header-menu">
                                 <ul>
-                                    <li><a href="dashboard.html">Tài khoản</a></li>
-                                    <li><a href="about.html">Về chúng tôi</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="wishlist.html">Đơn hàng</a></li>
-                                    <li><a
-                                            href="
-                                        @if (Session::has('user')) {{ url('cart') }}
-                                              @else
-                                              # @endif
-                                       
-                                         ">Giỏ
-                                            hàng</a></li>
+
+                                    @if (Session::has('user'))
+                                        <a href="{{ url('cart') }}">Giỏ hàng</a>
+                                    @endif
+
                                     @php
                                         $user = Session::get('user');
                                     @endphp
                                     @if (!Session::has('user'))
-                                        <li><a href="{{ url('login') }}">Đăng nhập</a></li>
+                                        <li><a href="{{ url('login') }}">Đăng nhập</a></li>/
+                                        <li><a href="{{ url('login') }}">Đăng ký</a></li>
                                     @else
                                         <li class="hello"><a href="">Xin chào {{ $user->name }}</a>
                                             <ul class="sub-menu">
@@ -102,7 +86,7 @@
                                                     <li><a href="{{ url('admin') }}">Truy cập trang admin</a></li>
                                                 @endif
 
-                                                <li><a href="">Đơn đặt</a></li>
+                                                <li><a href="">Lịch sử mua hàng</a></li>
                                                 <li><a href="{{ route('logout') }}">Đăng xuất</a></li>
                                             </ul>
                                         </li>
@@ -116,35 +100,13 @@
 
                         <span class="separator"></span>
 
-                        <div class="header-dropdown">
-                            <a href="#"><i class="flag-us flag"></i>VIE</a>
-                            <div class="header-menu">
-                                <ul>
-                                    <li><a href="#"><i class="flag-us flag mr-2"></i>ENG</a>
-                                    </li>
-                                    <li><a href="#"><i class="flag-fr flag mr-2"></i>FRA</a></li>
-                                </ul>
-                            </div>
-                            <!-- End .header-menu -->
-                        </div>
-                        <!-- End .header-dropown -->
 
-                        <div class="header-dropdown mr-auto mr-sm-3 mr-md-0">
-                            <a href="#">VNĐ</a>
-                            <div class="header-menu">
-                                <ul>
-                                    <li><a href="#">EUR</a></li>
-                                    <li><a href="#">USD</a></li>
-                                </ul>
-                            </div>
-                            <!-- End .header-menu -->
-                        </div>
-                        <!-- End .header-dropown -->
 
                         <span class="separator"></span>
 
                         <div class="social-icons">
-                            <a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
+                            <a href="https://www.facebook.com/nguyenvietson250"
+                                class="social-icon social-facebook icon-facebook" target="_blank"></a>
                             <a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
                             <a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
                         </div>
@@ -181,10 +143,10 @@
                                         placeholder="Search..." required>
                                     <div class="select-custom">
                                         <select id="cat" name="cat">
-                                            <option value="">All Categories</option>
-                                            <option value="4">Fashion</option>
-                                            <option value="12">- Women</option>
-                                            <option value="13">- Men</option>
+                                            <option value="">Danh mục</option>
+                                            <option value="4">Điện thoại</option>
+                                            <option value="12">Laptop</option>
+                                            <option value="13">Màn hình</option>
 
                                         </select>
                                     </div>
@@ -199,7 +161,7 @@
                         <div class="header-contact d-none d-lg-flex pl-4 pr-4">
                             <img alt="phone" src="{{ asset('assets/views/images/phone.png') }}" width="30"
                                 height="30" class="pb-1">
-                            <h6><span>SĐT Liên hệ</span><a href="tel:#" class="text-dark font1">+123 5678 890</a>
+                            <h6><span>SĐT Liên hệ</span><a href="tel:#" class="text-dark font1">0973657594</a>
                             </h6>
                         </div>
 
@@ -210,8 +172,6 @@
                             <a href="{{ url('dashbroad') }}" class="header-icon" title="login"><i
                                     class="icon-user-2"></i></a>
                         @endif
-                        <a href="wishlist.html" class="header-icon" title="wishlist"><i
-                                class="icon-wishlist-2"></i></a>
 
                         {{-- Cart --}}
                         <div class="dropdown cart-dropdown">
@@ -253,56 +213,61 @@
                                 <a href="#" title="Close (Esc)" class="btn-close">×</a>
                                 @if (Session::has('user'))
                                     <div class="dropdownmenu-wrapper custom-scrollbar">
-                                        <div class="dropdown-cart-header">Shopping Cart</div>
+                                        <div class="dropdown-cart-header">Giỏ hàng</div>
                                         <!-- End .dropdown-cart-header -->
+                                        @if ($carts->count() > 0)
+                                            @foreach ($carts as $item)
+                                                <div class="dropdown-cart-products">
+                                                    <div class="product">
+                                                        <div class="product-details">
+                                                            <h4 class="product-title">
+                                                                <a href="#">{{ $item->name }}</a>
+                                                            </h4>
 
-                                        @foreach ($carts as $item)
-                                            <div class="dropdown-cart-products">
-                                                <div class="product">
-                                                    <div class="product-details">
-                                                        <h4 class="product-title">
-                                                            <a href="product.html">{{ $item->name }}</a>
-                                                        </h4>
+                                                            <span class="cart-product-info">
+                                                                <span
+                                                                    class="cart-product-qty">{{ $item->quantityProductCart }}</span>
+                                                                × {{ number_format($item->price, '0', ',', '.') }}đ
+                                                            </span>
+                                                        </div>
 
-                                                        <span class="cart-product-info">
-                                                            <span
-                                                                class="cart-product-qty">{{ $item->quantityProductCart }}</span>
-                                                            × {{ number_format($item->price, '0', ',', '.') }}đ
-                                                        </span>
+
+                                                        <figure class="product-image-container">
+                                                            <a href="#" class="product-image">
+
+                                                                <img src="{{ asset('images/' . $item->img) }}"
+                                                                    alt="product" width="80" height="80">
+                                                            </a>
+
+                                                            <a href="{{ route('deleteCart', $item->idCart) }}"
+                                                                class="btn-remove"
+                                                                title="Remove Product"><span>×</span></a>
+                                                        </figure>
                                                     </div>
 
-
-                                                    <figure class="product-image-container">
-                                                        <a href="product.html" class="product-image">
-
-                                                            <img src="{{ asset('images/' . $item->img) }}"
-                                                                alt="product" width="80" height="80">
-                                                        </a>
-
-                                                        <a href="{{ route('deleteCart', $item->idCart) }}"
-                                                            class="btn-remove"
-                                                            title="Remove Product"><span>×</span></a>
-                                                    </figure>
                                                 </div>
+                                            @endforeach
 
+
+                                            <div class="dropdown-cart-total">
+                                                <span>TỔNG TIỀN:</span>
+
+                                                <span
+                                                    class="cart-total-price float-right">{{ number_format($totalPrice, '0', ',', '.') }}đ</span>
                                             </div>
-                                        @endforeach
-
-                                        <div class="dropdown-cart-total">
-                                            <span>TỔNG TIỀN:</span>
-
-                                            <span
-                                                class="cart-total-price float-right">{{ number_format($totalPrice, '0', ',', '.') }}đ</span>
-                                        </div>
 
 
-                                        <div class="dropdown-cart-action">
-                                            <a href="{{ url('cart') }}"
-                                                class="btn btn-gray btn-block view-cart">Giỏ
-                                                hàng</a>
-                                            <a href="{{ route('checkout') }}" class="btn btn-dark btn-block">Thanh
-                                                toán</a>
-                                        </div>
+                                            <div class="dropdown-cart-action">
+                                                <a href="{{ url('cart') }}"
+                                                    class="btn btn-gray btn-block view-cart">Giỏ
+                                                    hàng</a>
+                                                <a href="{{ route('checkout') }}"
+                                                    class="btn btn-dark btn-block">Thanh
+                                                    toán</a>
+                                            </div>
+                                        @else
+                                            <h5>Giỏ hàng của bạn trống!</h5>
+                                        @endif
                                         <!-- End .dropdown-cart-total -->
                                     </div>
                                 @endif
@@ -336,19 +301,19 @@
                                     <!-- End .megamenu -->
                                 </li>
                             @endforeach
-                            <li><a href="blog.html">Blog</a></li>
+                            {{-- <li><a href="blog.html">Blog</a></li> --}}
                             <li>
                                 <a href="#">Khuyến mãi</a>
-                                <ul class="custom-scrollbar">
+                                {{-- <ul class="custom-scrollbar">
                                     <li><a href="element-accordions.html">Accordion</a></li>
                                     <li><a href="element-alerts.html">Alerts</a></li>
 
-                                </ul>
+                                </ul> --}}
                             </li>
                             <li><a href="contact.html">Liên hệ</a></li>
-                            <li class="float-right"><a href="https://1.envato.market/DdLk5" rel="noopener"
+                            {{-- <li class="float-right"><a href="https://1.envato.market/DdLk5" rel="noopener"
                                     class="pl-5" target="_blank">Sale 15%</a></li>
-                            <li class="float-right"><a href="#" class="pl-5">Điện thoại cũ!</a></li>
+                            <li class="float-right"><a href="#" class="pl-5">Điện thoại cũ!</a></li> --}}
                         </ul>
                     </nav>
                 </div>
@@ -368,29 +333,29 @@
                     <div class="row">
                         <div class="col-lg-3 col-sm-6">
                             <div class="widget">
-                                <h4 class="widget-title">Contact Info</h4>
+                                <h4 class="widget-title">Thông tin liên hệ</h4>
                                 <ul class="contact-info">
                                     <li>
-                                        <span class="contact-info-label">Address:</span>123 Street Name, City, England
+                                        <span class="contact-info-label">Địa chỉ:</span>Chương Mỹ, Hà Nội
                                     </li>
                                     <li>
-                                        <span class="contact-info-label">Phone:</span><a href="tel:">(123)
-                                            456-7890</a>
+                                        <span class="contact-info-label">SĐT:</span><a href="tel:">0973657594</a>
                                     </li>
                                     <li>
                                         <span class="contact-info-label">Email:</span> <a
                                             href="https://portotheme.com/cdn-cgi/l/email-protection#620f030b0e22071a030f120e074c010d0f"><span
                                                 class="__cf_email__"
-                                                data-cfemail="f499959d98b4918c9599849891da979b99">[email&#160;protected]</span></a>
+                                                data-cfemail="f499959d98b4918c9599849891da979b99">sonnguyen250204@gmail.com</span></a>
                                     </li>
                                     <li>
-                                        <span class="contact-info-label">Working Days/Hours:</span> Mon - Sun / 9:00 AM
+                                        <span class="contact-info-label">Ngày/Giờ làm việc:</span> Thứ 2 - CN / 9:00 AM
                                         - 8:00 PM
                                     </li>
                                 </ul>
                                 <div class="social-icons">
-                                    <a href="#" class="social-icon social-facebook icon-facebook"
-                                        target="_blank" title="Facebook"></a>
+                                    <a href="https://www.facebook.com/nguyenvietson250"
+                                        class="social-icon social-facebook icon-facebook" target="_blank"
+                                        title="Facebook"></a>
                                     <a href="#" class="social-icon social-twitter icon-twitter" target="_blank"
                                         title="Twitter"></a>
                                     <a href="#" class="social-icon social-instagram icon-instagram"
@@ -404,19 +369,19 @@
 
                         <div class="col-lg-3 col-sm-6">
                             <div class="widget">
-                                <h4 class="widget-title">Customer Service</h4>
+                                <h4 class="widget-title">Hỗ trợ khách hàng</h4>
 
                                 <ul class="links">
-                                    <li><a href="#">Help & FAQs</a></li>
-                                    <li><a href="#">Order Tracking</a></li>
-                                    <li><a href="#">Shipping & Delivery</a></li>
-                                    <li><a href="#">Orders History</a></li>
-                                    <li><a href="#">Advanced Search</a></li>
-                                    <li><a href="dashboard.html">My Account</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="#">Corporate Sales</a></li>
-                                    <li><a href="#">Privacy</a></li>
+                                    <li><a href="#">Trợ giúp & Câu hỏi</a></li>
+                                    <li><a href="#">Kiểm tra đơn hàng</a></li>
+                                    <li><a href="#">Shipping</a></li>
+                                    <li><a href="#">Lịch sử đặt hàng</a></li>
+                                    <li><a href="#">Quảng cáo</a></li>
+                                    <li><a href="dashboard.html">Tài khoản</a></li>
+
+                                    <li><a href="about.html">Về chúng tôi</a></li>
+                                    <li><a href="#">Giảm giá</a></li>
+                                    {{-- <li><a href="#">Privacy</a></li> --}}
                                 </ul>
                             </div>
                             <!-- End .widget -->
@@ -425,14 +390,14 @@
 
                         <div class="col-lg-3 col-sm-6">
                             <div class="widget">
-                                <h4 class="widget-title">Popular Tags</h4>
+                                <h4 class="widget-title">Từ khóa phổ biến</h4>
 
                                 <div class="tagcloud">
-                                    <a href="#">Bag</a>
-                                    <a href="#">Black</a>
-                                    <a href="#">Blue</a>
-                                    <a href="#">Clothes</a>
-                                    <a href="#">Fashion</a>
+                                    <a href="#">Điện thoại</a>
+                                    <a href="#">iPhone 15</a>
+                                    <a href="#">Máy tính</a>
+                                    {{-- <a href="#">Clothes</a>
+                                    <a href="#">Fashion</a> --}}
 
 
                                 </div>
@@ -443,14 +408,15 @@
 
                         <div class="col-lg-3 col-sm-6">
                             <div class="widget widget-newsletter">
-                                <h4 class="widget-title">Subscribe newsletter</h4>
-                                <p>Get all the latest information on events, sales and offers. Sign up for newsletter:
+                                <h4 class="widget-title">Đăng ký nhận thông báo</h4>
+                                <p>Nhận tất cả thông tin mới nhất về các sự kiện, chương trình khuyến mại và ưu đãi.
+                                    Đăng ký nhận bản tin:
                                 </p>
                                 <form action="#" class="mb-0">
-                                    <input type="email" class="form-control m-b-3" placeholder="Email address"
+                                    <input type="email" class="form-control m-b-3" placeholder="Địa chỉ Email"
                                         required>
 
-                                    <input type="submit" class="btn btn-primary shadow-none" value="Subscribe">
+                                    <input type="submit" class="btn btn-primary shadow-none" value="Đăng ký">
                                 </form>
                             </div>
                             <!-- End .widget -->
@@ -467,7 +433,7 @@
                 <div class="footer-bottom">
                     <div class="container d-sm-flex align-items-center">
                         <div class="footer-left">
-                            <span class="footer-copyright">© Porto eCommerce. 2021. All Rights Reserved</span>
+                            <span class="footer-copyright">© Nguyễn Viết Sơn. 2024</span>
                         </div>
 
                         <div class="footer-right ml-auto mt-1 mt-sm-0">
@@ -508,139 +474,60 @@
             <span class="mobile-menu-close"><i class="fa fa-times"></i></span>
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
-                    <li><a href="demo4.html">Home</a></li>
+                    <li><a href="demo4.html">Trang chủ </a></li>
                     <li>
-                        <a href="category.html">Categories</a>
+                        <a href="#">Danh mục</a>
                         <ul>
-                            <li><a href="category.html">Full Width Banner</a></li>
-                            <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
-                            <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
-                            <li><a href="https://www.portotheme.com/html/porto_ecommerce/category-sidebar-left.html">Left
-                                    Sidebar</a></li>
-                            <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-                            <li><a href="category-off-canvas.html">Off Canvas Filter</a></li>
-                            <li><a href="category-horizontal-filter1.html">Horizontal Filter 1</a></li>
-                            <li><a href="category-horizontal-filter2.html">Horizontal Filter 2</a></li>
-                            <li><a href="#">List Types</a></li>
-                            <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll<span
-                                        class="tip tip-new">New</span></a></li>
-                            <li><a href="category.html">3 Columns Products</a></li>
-                            <li><a href="category-4col.html">4 Columns Products</a></li>
-                            <li><a href="category-5col.html">5 Columns Products</a></li>
-                            <li><a href="category-6col.html">6 Columns Products</a></li>
-                            <li><a href="category-7col.html">7 Columns Products</a></li>
-                            <li><a href="category-8col.html">8 Columns Products</a></li>
+                    
+                            <li><a href="category-6col.html">Điện thoại</a></li>
+                            <li><a href="category-7col.html">Máy tính</a></li>
+                            <li><a href="category-8col.html">Màn hình</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="product.html">Products</a>
+                        <a href="#">Sản phẩm</a>
                         <ul>
-                            <li>
-                                <a href="#" class="nolink">PRODUCT PAGES</a>
-                                <ul>
-                                    <li><a href="product.html">SIMPLE PRODUCT</a></li>
-                                    <li><a href="product-variable.html">VARIABLE PRODUCT</a></li>
-                                    <li><a href="product.html">SALE PRODUCT</a></li>
-                                    <li><a href="product.html">FEATURED & ON SALE</a></li>
-                                    <li><a href="product-sticky-info.html">WIDTH CUSTOM TAB</a></li>
-                                    <li><a href="product-sidebar-left.html">WITH LEFT SIDEBAR</a></li>
-                                    <li><a href="product-sidebar-right.html">WITH RIGHT SIDEBAR</a></li>
-                                    <li><a href="product-addcart-sticky.html">ADD CART STICKY</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#" class="nolink">PRODUCT LAYOUTS</a>
-                                <ul>
-                                    <li><a href="product-extended-layout.html">EXTENDED LAYOUT</a></li>
-                                    <li><a href="product-grid-layout.html">GRID IMAGE</a></li>
-                                    <li><a href="product-full-width.html">FULL WIDTH LAYOUT</a></li>
-                                    <li><a href="product-sticky-info.html">STICKY INFO</a></li>
-                                    <li><a href="product-sticky-both.html">LEFT & RIGHT STICKY</a></li>
-                                    <li><a href="product-transparent-image.html">TRANSPARENT IMAGE</a></li>
-                                    <li><a href="product-center-vertical.html">CENTER VERTICAL</a></li>
-                                    <li><a href="#">BUILD YOUR OWN</a></li>
-                                </ul>
-                            </li>
+                            @foreach ($categories as $i => $item)
+                                <li>
+                                    <a href="#" class="nolink">{{ $item->name }}</a>
+                                    @php
+                                        $products = DB::table('products')
+                                            ->where('iddm', $i + 1)
+                                            ->get();
+                                    @endphp
+                                    @foreach ($products as $product)
+                                        <ul>
+                                            <li><a href="#">{{ $product->name }}</a></li>
+                                        </ul>
+                                    @endforeach
+                                </li>
+                            @endforeach
+                          
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">Pages<span class="tip tip-hot">Hot!</span></a>
-                        <ul>
-                            <li>
-                                <a href="wishlist.html">Wishlist</a>
-                            </li>
-                            <li>
-                                <a href="cart.html">Shopping Cart</a>
-                            </li>
-                            <li>
-                                <a href="checkout.html">Checkout</a>
-                            </li>
-                            <li>
-                                <a href="dashboard.html">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="login.html">Login</a>
-                            </li>
-                            <li>
-                                <a href="forgot-password.html">Forgot Password</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="#">Elements</a>
-                        <ul class="custom-scrollbar">
-                            <li><a href="element-accordions.html">Accordion</a></li>
-                            <li><a href="element-alerts.html">Alerts</a></li>
-                            <li><a href="element-animations.html">Animations</a></li>
-                            <li><a href="element-banners.html">Banners</a></li>
-                            <li><a href="element-buttons.html">Buttons</a></li>
-                            <li><a href="element-call-to-action.html">Call to Action</a></li>
-                            <li><a href="element-countdown.html">Count Down</a></li>
-                            <li><a href="element-counters.html">Counters</a></li>
-                            <li><a href="element-headings.html">Headings</a></li>
-                            <li><a href="element-icons.html">Icons</a></li>
-                            <li><a href="element-info-box.html">Info box</a></li>
-                            <li><a href="element-posts.html">Posts</a></li>
-                            <li><a href="element-products.html">Products</a></li>
-                            <li><a href="element-product-categories.html">Product Categories</a></li>
-                            <li><a href="element-tabs.html">Tabs</a></li>
-                            <li><a href="element-testimonial.html">Testimonials</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                 
 
-                <ul class="mobile-menu mt-2 mb-2">
-                    <li class="border-0">
-                        <a href="#">
-                            Special Offer!
-                        </a>
-                    </li>
-                    <li class="border-0">
-                        <a href="#" target="_blank">
-                            Buy Porto!
-                            <span class="tip tip-hot">Hot</span>
-                        </a>
-                    </li>
-                </ul>
+                    <ul class="mobile-menu">
+                        @if (Session::has('user'))
+                            <li><a href="{{ url('dashbroad') }}">Tài khoản</a></li>
+                        @else
+                            <li><a href="{{ url('login') }}">Đăng nhập</a></li>
+                        @endif
+                        <li><a href="contact.html">Liên hệ</a></li>
 
-                <ul class="mobile-menu">
-                    <li><a href="login.html">My Account</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="wishlist.html">My Wishlist</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="login.html" class="login-link">Log In</a></li>
-                </ul>
+                        <li><a href="cart.html">Giỏ hàng</a></li>
+                        {{-- <li><a href="login.html" class="login-link">Log In</a></li> --}}
+                    </ul>
             </nav>
             <!-- End .mobile-nav -->
 
             <form class="search-wrapper mb-2" action="#">
-                <input type="text" class="form-control mb-0" placeholder="Search..." required />
+                <input type="text" class="form-control mb-0" placeholder="Tìm kiếm..." required />
                 <button class="btn icon-search text-white bg-transparent p-0" type="submit"></button>
             </form>
 
             <div class="social-icons">
-                <a href="#" class="social-icon social-facebook icon-facebook" target="_blank">
+                <a href="https://www.facebook.com/nguyenvietson250" class="social-icon social-facebook icon-facebook" target="_blank">
                 </a>
                 <a href="#" class="social-icon social-twitter icon-twitter" target="_blank">
                 </a>
@@ -650,7 +537,7 @@
         </div>
         <!-- End .mobile-menu-wrapper -->
     </div>
-    <!-- End .mobile-menu-container -->
+    
 
     <div class="sticky-navbar">
         <div class="sticky-info">
@@ -682,40 +569,6 @@
         </div>
     </div>
 
-    {{-- <div class="newsletter-popup mfp-hide bg-img" id="newsletter-popup-form"
-        style="background: #f1f1f1 no-repeat center/cover url(assets/views/images/newsletter_popup_bg.jpg)">
-        <div class="newsletter-popup-content">
-            <img src="assets/views/images/logo.png" width="111" height="44" alt="Logo" class="logo-newsletter">
-            <h2>Subscribe to newsletter</h2>
-
-            <p>
-                Subscribe to the Porto mailing list to receive updates on new arrivals, special offers and our
-                promotions.
-            </p>
-
-            <form action="#">
-                <div class="input-group">
-                    <input type="email" class="form-control" id="newsletter-email" name="newsletter-email"
-                        placeholder="Your email address" required />
-                    <input type="submit" class="btn btn-primary" value="Submit" />
-                </div>
-            </form>
-            <div class="newsletter-subscribe">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" value="0" id="show-again" />
-                    <label for="show-again" class="custom-control-label">
-                        Don't show this popup again
-                    </label>
-                </div>
-            </div>
-        </div>
-        <!-- End .newsletter-popup-content -->
-
-        <button title="Close (Esc)" type="button" class="mfp-close">
-            ×
-        </button>
-    </div> --}}
-    <!-- End .newsletter-popup -->
 
     <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
 
